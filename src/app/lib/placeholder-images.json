@@ -2,28 +2,40 @@
 {
   "placeholderImages": [
     {
-      "id": "gas-station-1",
-      "description": "Modern high-tech gas station at night",
-      "imageUrl": "https://picsum.photos/seed/gas1/800/600",
-      "imageHint": "gas station night"
+      "id": "banner-1",
+      "description": "Promoção de Cashback em Combustível",
+      "imageUrl": "https://picsum.photos/seed/promo1/800/400",
+      "imageHint": "gas station promotion"
     },
     {
-      "id": "gas-station-2",
-      "description": "Futuristic fueling pump interface",
-      "imageUrl": "https://picsum.photos/seed/gas2/800/600",
-      "imageHint": "fuel pump"
+      "id": "banner-2",
+      "description": "Desconto na Loja de Conveniência",
+      "imageUrl": "https://picsum.photos/seed/promo2/800/400",
+      "imageHint": "convenience store"
     },
     {
-      "id": "mission-reward",
-      "description": "High performance car dashboard",
-      "imageUrl": "https://picsum.photos/seed/mission1/800/600",
-      "imageHint": "car dashboard"
+      "id": "banner-3",
+      "description": "Programa de Fidelidade Amigo",
+      "imageUrl": "https://picsum.photos/seed/promo3/800/400",
+      "imageHint": "happy driver"
     },
     {
-      "id": "map-background",
-      "description": "Abstract dark digital map",
-      "imageUrl": "https://picsum.photos/seed/map1/1200/800",
-      "imageHint": "dark map"
+      "id": "logo-shell",
+      "description": "Logo Shell",
+      "imageUrl": "https://picsum.photos/seed/shell/200/200",
+      "imageHint": "shell logo"
+    },
+    {
+      "id": "logo-ipiranga",
+      "description": "Logo Ipiranga",
+      "imageUrl": "https://picsum.photos/seed/ipiranga/200/200",
+      "imageHint": "ipiranga logo"
+    },
+    {
+      "id": "logo-petrobras",
+      "description": "Logo Petrobras",
+      "imageUrl": "https://picsum.photos/seed/br/200/200",
+      "imageHint": "petrobras logo"
     }
   ]
 }

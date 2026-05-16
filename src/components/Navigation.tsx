@@ -1,30 +1,25 @@
+
 "use client"
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Wallet, Map, Target, Shield, LayoutDashboard, Home as HomeIcon } from "lucide-react"
+import { Home as HomeIcon, MapPin, Gift, User, Wallet } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navItems = [
+  { icon: HomeIcon, label: "Início", href: "/" },
+  { icon: MapPin, label: "Postos", href: "/stations" },
+  { icon: Gift, label: "Cupons", href: "/coupons" },
   { icon: Wallet, label: "Carteira", href: "/wallet" },
-  { icon: Target, label: "Missões", href: "/missions" },
-  { icon: Map, label: "Mapa", href: "/navigator" },
-  { icon: Shield, label: "Planos", href: "/membership" },
-  { icon: LayoutDashboard, label: "Admin", href: "/admin" },
+  { icon: User, label: "Perfil", href: "/profile" },
 ]
 
 export function Navigation() {
   const pathname = usePathname()
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-t border-border/50 pb-safe-area-inset-bottom shadow-lg">
-      <div className="flex justify-around items-center h-16 max-w-lg mx-auto px-4">
-        <Link href="/" className={cn("flex flex-col items-center gap-1 transition-colors", pathname === "/" ? "text-primary" : "text-muted-foreground hover:text-primary")}>
-          <div className="p-1">
-            <HomeIcon className="w-5 h-5" />
-          </div>
-          <span className="text-[10px] uppercase font-bold tracking-widest">Início</span>
-        </Link>
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-t border-slate-100 pb-safe-area-inset-bottom shadow-[0_-4px_10px_rgba(0,0,0,0.02)]">
+      <div className="flex justify-around items-center h-20 max-w-lg mx-auto px-4">
         {navItems.map((item) => {
           const Icon = item.icon
           const isActive = pathname === item.href
@@ -33,14 +28,22 @@ export function Navigation() {
               key={item.href} 
               href={item.href}
               className={cn(
-                "flex flex-col items-center gap-1 transition-colors",
-                isActive ? "text-primary" : "text-muted-foreground hover:text-primary"
+                "flex flex-col items-center gap-1.5 transition-all duration-300 flex-1",
+                isActive ? "text-primary scale-110" : "text-slate-400 hover:text-primary"
               )}
             >
-              <div className="p-1">
-                <Icon className="w-5 h-5" />
+              <div className={cn(
+                "p-2 rounded-xl transition-colors",
+                isActive ? "bg-primary/10" : "bg-transparent"
+              )}>
+                <Icon className={cn("w-5 h-5", isActive ? "stroke-[2.5px]" : "stroke-2")} />
               </div>
-              <span className="text-[10px] uppercase font-bold tracking-widest">{item.label}</span>
+              <span className={cn(
+                "text-[9px] uppercase font-bold tracking-tighter",
+                isActive ? "opacity-100" : "opacity-60"
+              )}>
+                {item.label}
+              </span>
             </Link>
           )
         })}
