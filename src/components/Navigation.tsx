@@ -1,4 +1,3 @@
-
 "use client"
 
 import Link from "next/link"
@@ -18,9 +17,9 @@ export function Navigation() {
   const pathname = usePathname()
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-t border-border/50 pb-safe-area-inset-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-t border-border/50 pb-safe-area-inset-bottom shadow-lg">
       <div className="flex justify-around items-center h-16 max-w-lg mx-auto px-4">
-        <Link href="/" className={cn("flex flex-col items-center gap-1 transition-colors", pathname === "/" ? "text-primary" : "text-muted-foreground hover:text-foreground")}>
+        <Link href="/" className={cn("flex flex-col items-center gap-1 transition-colors", pathname === "/" ? "text-primary" : "text-muted-foreground hover:text-primary")}>
           <div className="p-1">
             <HomeIcon className="w-5 h-5" />
           </div>
@@ -35,7 +34,7 @@ export function Navigation() {
               href={item.href}
               className={cn(
                 "flex flex-col items-center gap-1 transition-colors",
-                isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                isActive ? "text-primary" : "text-muted-foreground hover:text-primary"
               )}
             >
               <div className="p-1">
