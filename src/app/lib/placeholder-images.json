@@ -1,0 +1,29 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "gas-station-1",
+      "description": "Modern high-tech gas station at night",
+      "imageUrl": "https://picsum.photos/seed/gas1/800/600",
+      "imageHint": "gas station night"
+    },
+    {
+      "id": "gas-station-2",
+      "description": "Futuristic fueling pump interface",
+      "imageUrl": "https://picsum.photos/seed/gas2/800/600",
+      "imageHint": "fuel pump"
+    },
+    {
+      "id": "mission-reward",
+      "description": "High performance car dashboard",
+      "imageUrl": "https://picsum.photos/seed/mission1/800/600",
+      "imageHint": "car dashboard"
+    },
+    {
+      "id": "map-background",
+      "description": "Abstract dark digital map",
+      "imageUrl": "https://picsum.photos/seed/map1/1200/800",
+      "imageHint": "dark map"
+    }
+  ]
+}
