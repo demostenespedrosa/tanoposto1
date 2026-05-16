@@ -13,7 +13,7 @@ export function QuickAction() {
 
   const handleActivate = () => {
     setIsActivating(true)
-    // Simulate real-time GPS telemetry validation
+    // Simula validação de telemetria GPS em tempo real
     setTimeout(() => {
       setIsActivating(false)
       setIsSuccess(true)
@@ -37,9 +37,9 @@ export function QuickAction() {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-md bg-card border-border">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-headline tracking-tight">Oktano Passport</DialogTitle>
+            <DialogTitle className="text-2xl font-headline tracking-tight">Ativar Abastecimento</DialogTitle>
             <DialogDescription className="text-muted-foreground">
-              Resilient offline generation for instant pump activation.
+              Gere seu token seguro para ativação instantânea na bomba.
             </DialogDescription>
           </DialogHeader>
           
@@ -50,28 +50,28 @@ export function QuickAction() {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 pointer-events-none" />
                   <img 
                     src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=OKTANO-SESSION-SECURE" 
-                    alt="Session QR Code"
+                    alt="QR Code de Sessão"
                     className="w-48 h-48 relative z-10 opacity-90 transition-opacity"
                   />
                   {isActivating && (
                     <div className="absolute inset-0 z-20 bg-background/60 backdrop-blur-sm flex items-center justify-center">
                       <div className="flex flex-col items-center gap-3">
                         <Loader2 className="w-8 h-8 text-primary animate-spin" />
-                        <span className="text-xs font-bold tracking-widest text-primary animate-pulse">VALIDATING GPS...</span>
+                        <span className="text-xs font-bold tracking-widest text-primary animate-pulse uppercase">Validando Localização...</span>
                       </div>
                     </div>
                   )}
                 </div>
                 <div className="text-center space-y-2">
-                  <p className="text-sm font-medium text-foreground">Secure Token: <span className="font-mono text-accent">#OK-8842-XP</span></p>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Expires in 01:59</p>
+                  <p className="text-sm font-medium text-foreground">Token Seguro: <span className="font-mono text-accent">#OK-8842-XP</span></p>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Expira em 01:59</p>
                 </div>
                 <Button 
                   onClick={handleActivate}
                   disabled={isActivating}
                   className="w-full h-12 bg-primary text-primary-foreground font-bold tracking-wide"
                 >
-                  {isActivating ? "Authenticating..." : "ACTIVATE PUMP"}
+                  {isActivating ? "Autenticando..." : "ATIVAR BOMBA AGORA"}
                 </Button>
               </>
             ) : (
@@ -80,14 +80,14 @@ export function QuickAction() {
                   <CheckCircle2 className="w-12 h-12 text-accent" />
                 </div>
                 <div className="text-center space-y-2">
-                  <h3 className="text-xl font-headline font-bold text-accent">PUMP READY</h3>
-                  <p className="text-sm text-muted-foreground">Fueling session authorized at Shell Station #402. Cashback tracking active.</p>
+                  <h3 className="text-xl font-headline font-bold text-accent uppercase">Bomba Liberada</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">Sessão autorizada no Posto Shell #402. Abasteça e ganhe cashback automaticamente.</p>
                 </div>
                 <Button 
                   onClick={() => setIsOpen(false)}
                   className="w-full bg-secondary hover:bg-secondary/80 text-foreground"
                 >
-                  DISMISS
+                  FECHAR
                 </Button>
               </div>
             )}

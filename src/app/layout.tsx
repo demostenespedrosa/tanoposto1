@@ -3,8 +3,8 @@ import type {Metadata} from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Oktano | High-Performance Loyalty',
-  description: 'The elite ecosystem for gas station loyalty and fuel economy.',
+  title: 'Oktano | Alta Performance em Fidelidade',
+  description: 'O ecossistema de elite para fidelidade em postos e economia de combustível.',
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="pt-BR" className="dark">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

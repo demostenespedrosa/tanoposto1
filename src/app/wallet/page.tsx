@@ -9,10 +9,10 @@ import { cn } from "@/lib/utils"
 
 export default function WalletPage() {
   const transactions = [
-    { id: "TX-9901", date: "2024-10-25 14:20", type: "CREDIT", amount: 4.50, description: "Fueling Reward - Station #402", account: "Cashback Reservoir" },
-    { id: "TX-9902", date: "2024-10-24 10:15", type: "CREDIT", amount: 10.00, description: "Mission Bonus: High Octane Week", account: "Incentive Pool" },
-    { id: "TX-9903", date: "2024-10-23 18:45", type: "DEBIT", amount: 25.00, description: "In-Store Voucher Redemption", account: "User Liability" },
-    { id: "TX-9904", date: "2024-10-22 09:12", type: "CREDIT", amount: 2.15, description: "Fueling Reward - Station #109", account: "Cashback Reservoir" },
+    { id: "TX-9901", date: "25/10/2024 14:20", type: "CREDIT", amount: 4.50, description: "Recompensa de Abastecimento - Posto #402", account: "Reservatório de Cashback" },
+    { id: "TX-9902", date: "24/10/2024 10:15", type: "CREDIT", amount: 10.00, description: "Bônus de Missão: Semana de Alta Octanagem", account: "Pool de Incentivos" },
+    { id: "TX-9903", date: "23/10/2024 18:45", type: "DEBIT", amount: 25.00, description: "Resgate de Voucher na Loja", account: "Saque do Usuário" },
+    { id: "TX-9904", date: "22/10/2024 09:12", type: "CREDIT", amount: 2.15, description: "Recompensa de Abastecimento - Posto #109", account: "Reservatório de Cashback" },
   ]
 
   return (
@@ -22,40 +22,40 @@ export default function WalletPage() {
           <History className="w-6 h-6" />
         </div>
         <div>
-          <h1 className="text-2xl font-headline font-bold tracking-tighter">Ledger Engine</h1>
+          <h1 className="text-2xl font-headline font-bold tracking-tighter">Minha Carteira</h1>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
-            <ShieldCheck className="w-3 h-3 text-accent" /> Immutable Double-Entry Journal
+            <ShieldCheck className="w-3 h-3 text-accent" /> Histórico Financeiro Seguro
           </p>
         </div>
       </header>
 
       <Card className="bg-card border-border/50">
         <CardHeader>
-          <CardTitle className="text-sm font-bold uppercase tracking-widest text-muted-foreground">Account Summary</CardTitle>
+          <CardTitle className="text-sm font-bold uppercase tracking-widest text-muted-foreground">Resumo da Conta</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
            <div className="flex justify-between items-end">
               <div>
-                <p className="text-3xl font-headline font-bold tracking-tighter">$124.50</p>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Current Net Balance</p>
+                <p className="text-3xl font-headline font-bold tracking-tighter">R$ 124,50</p>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Saldo Líquido Atual</p>
               </div>
-              <Badge className="bg-accent/10 text-accent border-accent/20">AUDITED</Badge>
+              <Badge className="bg-accent/10 text-accent border-accent/20">AUDITADO</Badge>
            </div>
            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
               <div className="space-y-1">
-                <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Total Credits</p>
-                <p className="text-sm font-bold text-accent">+$1,240.20</p>
+                <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Total de Créditos</p>
+                <p className="text-sm font-bold text-accent">+R$ 1.240,20</p>
               </div>
               <div className="space-y-1 text-right">
-                <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Total Debits</p>
-                <p className="text-sm font-bold text-foreground opacity-70">-$1,115.70</p>
+                <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Total de Débitos</p>
+                <p className="text-sm font-bold text-foreground opacity-70">-R$ 1.115,70</p>
               </div>
            </div>
         </CardContent>
       </Card>
 
       <div className="space-y-3">
-        <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Transaction Journal</h2>
+        <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Diário de Transações</h2>
         <div className="space-y-3">
           {transactions.map((tx) => (
             <div key={tx.id} className="p-4 bg-secondary/30 rounded-xl border border-border/30 hover:border-primary/50 transition-all group">
@@ -76,7 +76,7 @@ export default function WalletPage() {
                   </div>
                 </div>
                 <p className={cn("font-headline font-bold", tx.type === "CREDIT" ? "text-accent" : "text-foreground")}>
-                  {tx.type === "CREDIT" ? "+" : "-"}${tx.amount.toFixed(2)}
+                  {tx.type === "CREDIT" ? "+" : "-"}R$ {tx.amount.toFixed(2).replace('.', ',')}
                 </p>
               </div>
               <div className="flex justify-between items-center pt-2 border-t border-border/20">
@@ -91,8 +91,8 @@ export default function WalletPage() {
       <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl flex gap-3">
         <Info className="w-5 h-5 text-primary shrink-0" />
         <p className="text-[10px] leading-relaxed text-muted-foreground">
-          <strong>Security Note:</strong> All transactions are signed with SHA-256 hashes and committed to an immutable sequence. 
-          Your balance is reconciled across multiple ledger partitions in real-time.
+          <strong>Segurança Oktano:</strong> Todas as transações são registradas de forma imutável. 
+          Seu saldo é reconciliado em tempo real com os sistemas dos postos parceiros.
         </p>
       </div>
 
