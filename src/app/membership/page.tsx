@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navigation } from "@/components/Navigation"
@@ -10,9 +9,9 @@ import { cn } from "@/lib/utils"
 
 export default function MembershipPage() {
   const tiers = [
-    { name: "CORE", price: "$0/mo", features: ["1% Cashback", "Basic Missions", "Route Navigation"], active: false },
-    { name: "ELITE", price: "$9.90/mo", features: ["3% Cashback", "Priority AI Missions", "Smart-Path Plus", "Telemetry Guard"], active: true },
-    { name: "PREMIUM", price: "$24.90/mo", features: ["5% Cashback", "Vehicle Telemetry Integration", "Concierge Fueling", "Fleet Partner Discounts"], active: false },
+    { name: "CORE", price: "$0/mo", features: ["1% Cashback", "Missões Básicas", "Navegação de Rota"], active: false },
+    { name: "ELITE", price: "$9.90/mo", features: ["3% Cashback", "Missões Exclusivas", "Smart-Path Plus", "Monitoramento de Consumo"], active: true },
+    { name: "PREMIUM", price: "$24.90/mo", features: ["5% Cashback", "Telemetria de Veículo", "Abastecimento Concierge", "Descontos em Parceiros"], active: false },
   ]
 
   return (
@@ -24,7 +23,7 @@ export default function MembershipPage() {
         <div>
           <h1 className="text-2xl font-headline font-bold tracking-tighter">Oktano Nexus</h1>
           <p className="text-xs text-muted-foreground flex items-center gap-1 uppercase tracking-widest font-bold">
-            Tiered Membership Levels
+            Níveis de Assinatura
           </p>
         </div>
       </header>
@@ -37,7 +36,7 @@ export default function MembershipPage() {
           )}>
             {tier.active && (
               <div className="absolute top-0 right-0 p-3">
-                 <Badge className="bg-primary text-primary-foreground font-bold text-[8px] tracking-widest">CURRENT PLAN</Badge>
+                 <Badge className="bg-primary text-primary-foreground font-bold text-[8px] tracking-widest">PLANO ATUAL</Badge>
               </div>
             )}
             <CardHeader>
@@ -60,7 +59,7 @@ export default function MembershipPage() {
                 variant={tier.active ? "outline" : "default"} 
                 className={cn("w-full font-bold tracking-wide", tier.active ? "border-primary text-primary" : "bg-primary text-primary-foreground")}
                >
-                 {tier.active ? "MANAGE SUBSCRIPTION" : `UPGRADE TO ${tier.name}`}
+                 {tier.active ? "GERENCIAR ASSINATURA" : `MIGRAR PARA ${tier.name}`}
                </Button>
             </CardContent>
           </Card>
@@ -70,13 +69,13 @@ export default function MembershipPage() {
       <Card className="bg-secondary/20 border-border/50">
         <CardHeader>
           <CardTitle className="text-sm font-bold flex items-center gap-2">
-             <Info className="w-4 h-4 text-primary" /> Future Integration
+             <Info className="w-4 h-4 text-primary" /> Próximas Atualizações
           </CardTitle>
         </CardHeader>
         <CardContent>
            <p className="text-xs text-muted-foreground leading-relaxed">
-             Our Engineering team is developing <strong>Telemetry Nexus</strong> for vehicle-to-cloud sync. 
-             Premium members will receive an OBD-II dongle for deep fuel consumption monitoring and automated diagnostic alerts.
+             Estamos desenvolvendo o <strong>Telemetry Nexus</strong> para sincronização veículo-nuvem. 
+             Membros Premium poderão monitorar o consumo de combustível em tempo real e receber alertas de manutenção.
            </p>
         </CardContent>
       </Card>

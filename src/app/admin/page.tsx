@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navigation } from "@/components/Navigation"
@@ -17,9 +16,9 @@ export default function AdminPage() {
             <LayoutDashboard className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-headline font-bold tracking-tighter">Fleet Ops</h1>
+            <h1 className="text-2xl font-headline font-bold tracking-tighter">Painel de Frotas</h1>
             <p className="text-xs text-muted-foreground flex items-center gap-1 uppercase tracking-widest font-bold">
-              Station #402 Admin
+              Estação #402 Admin
             </p>
           </div>
         </div>
@@ -30,9 +29,9 @@ export default function AdminPage() {
 
       <Tabs defaultValue="overview" className="space-y-6">
         <TabsList className="grid w-full grid-cols-3 bg-secondary">
-          <TabsTrigger value="overview">Live</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          <TabsTrigger value="rules">Missions</TabsTrigger>
+          <TabsTrigger value="overview">Ao Vivo</TabsTrigger>
+          <TabsTrigger value="analytics">Análise</TabsTrigger>
+          <TabsTrigger value="rules">Missões</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6 animate-in fade-in duration-500">
@@ -44,7 +43,7 @@ export default function AdminPage() {
                   <span className="text-[10px] text-accent font-bold animate-pulse">LIVE</span>
                 </div>
                 <p className="text-2xl font-headline font-bold">42</p>
-                <p className="text-[9px] uppercase tracking-widest font-bold text-muted-foreground">Active Pumps</p>
+                <p className="text-[9px] uppercase tracking-widest font-bold text-muted-foreground">Bombas Ativas</p>
               </CardContent>
             </Card>
             <Card className="bg-card border-primary/20">
@@ -54,19 +53,19 @@ export default function AdminPage() {
                   <span className="text-[10px] text-primary font-bold">88%</span>
                 </div>
                 <p className="text-2xl font-headline font-bold">12.4k</p>
-                <p className="text-[9px] uppercase tracking-widest font-bold text-muted-foreground">Liters Sold Today</p>
+                <p className="text-[9px] uppercase tracking-widest font-bold text-muted-foreground">Litros Vendidos Hoje</p>
               </CardContent>
             </Card>
           </div>
 
           <Card className="bg-gradient-to-br from-secondary to-background border-border">
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Cashback Circulation</CardTitle>
+              <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Circulação de Cashback</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex justify-between items-end">
                 <p className="text-3xl font-headline font-bold tracking-tighter">$4,120.50</p>
-                <Badge variant="outline" className="text-accent border-accent text-[9px]">HEALTHY POOL</Badge>
+                <Badge variant="outline" className="text-accent border-accent text-[9px]">POOL SAUDÁVEL</Badge>
               </div>
               <div className="h-24 w-full flex items-end gap-1 px-1">
                 {[40, 60, 45, 90, 65, 80, 50, 75, 85, 95].map((h, i) => (
@@ -77,12 +76,12 @@ export default function AdminPage() {
           </Card>
 
           <div className="space-y-4">
-            <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Security Telemetry</h2>
+            <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Telemetria de Segurança</h2>
             <div className="space-y-3">
               {[
-                { user: "User #8842", status: "VALID", event: "Pump Activation", time: "2m ago" },
-                { user: "User #1109", status: "SUSPICIOUS", event: "Voucher Resign", time: "15m ago" },
-                { user: "User #2240", status: "VALID", event: "Profile Sync", time: "42m ago" },
+                { user: "Usuário #8842", status: "VALID", event: "Ativação de Bomba", time: "2m atrás" },
+                { user: "Usuário #1109", status: "SUSPICIOUS", event: "Resgate de Voucher", time: "15m atrás" },
+                { user: "Usuário #2240", status: "VALID", event: "Sincronização de Perfil", time: "42m atrás" },
               ].map((log, i) => (
                 <div key={i} className="flex justify-between items-center p-3 bg-secondary/30 rounded-xl border border-border/30">
                   <div className="flex items-center gap-3">
@@ -102,11 +101,11 @@ export default function AdminPage() {
         <TabsContent value="analytics" className="space-y-6">
           <Card className="bg-card border-border">
              <CardHeader>
-                <CardTitle className="text-sm font-bold">Retention Cohorts</CardTitle>
+                <CardTitle className="text-sm font-bold">Cohorts de Retenção</CardTitle>
              </CardHeader>
              <CardContent className="flex items-center justify-center py-10 opacity-50">
                 <BarChart3 className="w-16 h-16 text-muted-foreground" />
-                <p className="text-xs ml-4">Historical aggregation in progress...</p>
+                <p className="text-xs ml-4">Agregação histórica em processamento...</p>
              </CardContent>
           </Card>
         </TabsContent>
@@ -114,23 +113,23 @@ export default function AdminPage() {
         <TabsContent value="rules" className="space-y-6">
           <Card className="bg-card border-border">
              <CardHeader>
-                <CardTitle className="text-sm font-bold">Gamification Engine</CardTitle>
-                <CardDescription>Configure mission state machines and reward multipliers.</CardDescription>
+                <CardTitle className="text-sm font-bold">Gerenciador de Gamificação</CardTitle>
+                <CardDescription>Configure multiplicadores e estados de recompensas.</CardDescription>
              </CardHeader>
              <CardContent className="space-y-4">
                 <div className="p-4 bg-secondary/30 rounded-lg border border-border/50 flex justify-between items-center">
                    <div>
-                      <p className="text-sm font-bold">Weekend Warrior</p>
-                      <p className="text-[10px] text-muted-foreground">Reward x2.5 for Sat-Sun fueling</p>
+                      <p className="text-sm font-bold">Guerreiro do Fim de Semana</p>
+                      <p className="text-[10px] text-muted-foreground">Recompensa x2.5 para abastecimento Sab-Dom</p>
                    </div>
-                   <Badge className="bg-accent text-accent-foreground">ACTIVE</Badge>
+                   <Badge className="bg-accent text-accent-foreground">ATIVO</Badge>
                 </div>
                 <div className="p-4 bg-secondary/30 rounded-lg border border-border/50 flex justify-between items-center opacity-60">
                    <div>
-                      <p className="text-sm font-bold">Night Owl Boost</p>
-                      <p className="text-[10px] text-muted-foreground">Reward x1.8 for 11pm-5am</p>
+                      <p className="text-sm font-bold">Boost Noturno</p>
+                      <p className="text-[10px] text-muted-foreground">Recompensa x1.8 entre 23h-05h</p>
                    </div>
-                   <Badge variant="outline">PAUSED</Badge>
+                   <Badge variant="outline">PAUSADO</Badge>
                 </div>
              </CardContent>
           </Card>

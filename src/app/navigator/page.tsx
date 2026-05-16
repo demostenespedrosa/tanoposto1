@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navigation } from "@/components/Navigation"
@@ -30,9 +29,9 @@ export default function NavigatorPage() {
           <Map className="w-6 h-6" />
         </div>
         <div>
-          <h1 className="text-2xl font-headline font-bold tracking-tighter">Smart Navigator</h1>
+          <h1 className="text-2xl font-headline font-bold tracking-tighter">Navegador Inteligente</h1>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
-            <DollarSign className="w-3 h-3 text-accent" /> PostGIS Route Optimization
+            <DollarSign className="w-3 h-3 text-accent" /> Otimização de Rota Oktano
           </p>
         </div>
       </header>
@@ -41,18 +40,17 @@ export default function NavigatorPage() {
         <div className="relative">
           <Input 
             className="pl-10 h-12 bg-secondary border-none focus-visible:ring-primary" 
-            placeholder="Search destination or route..." 
+            placeholder="Buscar destino ou rota..." 
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Button 
             onClick={handleSearch}
             className="absolute right-1 top-1 h-10 bg-primary text-primary-foreground font-bold"
           >
-            {isSearching ? <Loader2 className="w-4 h-4 animate-spin" /> : "FIND BEST"}
+            {isSearching ? <Loader2 className="w-4 h-4 animate-spin" /> : "BUSCAR"}
           </Button>
         </div>
 
-        {/* Map Placeholder */}
         <div className="relative h-64 w-full bg-secondary/30 rounded-2xl border border-border/50 overflow-hidden group">
           <img 
             src="https://picsum.photos/seed/oktano-map/1200/800" 
@@ -62,18 +60,17 @@ export default function NavigatorPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
           
-          {/* Animated Route Points */}
           <div className="absolute top-1/4 left-1/3 w-3 h-3 bg-primary rounded-full animate-pulse shadow-[0_0_15px_rgba(122,92,255,0.8)]" />
           <div className="absolute top-1/2 left-2/3 w-3 h-3 bg-accent rounded-full animate-bounce shadow-[0_0_15px_rgba(107,179,255,0.8)]" />
           
           <div className="absolute bottom-4 left-4 right-4">
-            <Badge className="bg-accent/90 text-accent-foreground font-bold tracking-widest text-[10px] uppercase">Optimal Route Identified</Badge>
+            <Badge className="bg-accent/90 text-accent-foreground font-bold tracking-widest text-[10px] uppercase">Melhor Rota Identificada</Badge>
           </div>
         </div>
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Economic Stop Analysis</h2>
+        <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Análise de Economia</h2>
         <div className="space-y-3">
           {stations.map((station, i) => (
             <Card key={i} className={cn("bg-card transition-all border-l-4", station.active ? "border-l-accent border-border" : "border-l-transparent border-border/30 opacity-70")}>
@@ -90,10 +87,10 @@ export default function NavigatorPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-[9px] uppercase font-bold text-accent tracking-widest">Real Saving</p>
+                  <p className="text-[9px] uppercase font-bold text-accent tracking-widest">Economia Real</p>
                   <p className="text-lg font-headline font-bold text-accent">{station.routeSavings}</p>
                   <Button size="sm" variant="ghost" className="h-6 px-2 text-[10px] font-bold text-primary">
-                    <NavIcon className="w-3 h-3 mr-1" /> GO
+                    <NavIcon className="w-3 h-3 mr-1" /> IR
                   </Button>
                 </div>
               </CardContent>
