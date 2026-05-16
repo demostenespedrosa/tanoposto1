@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { User, Settings, Bell, Shield, LogOut, ChevronRight, CreditCard, History, HelpCircle } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 export default function ProfilePage() {
   const menuItems = [
