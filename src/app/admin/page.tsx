@@ -22,7 +22,8 @@ import {
   LayoutDashboard,
   LogOut,
   Bell,
-  Loader2
+  Loader2,
+  Fuel
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
