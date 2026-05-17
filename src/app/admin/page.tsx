@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from "react"
@@ -26,7 +25,7 @@ import {
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Bar, BarChart, CartesianGrid, XAxis, ResponsiveContainer, Line, LineChart } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import {
   Sidebar,
   SidebarContent,
@@ -105,7 +104,7 @@ export default function SaaSAdminPage() {
           <SidebarFooter className="p-4">
             <SidebarMenu>
               <SidebarMenuItem>
-                <Link href="/login" className="w-full">
+                <Link href="/" className="w-full">
                   <SidebarMenuButton className="h-12 rounded-xl font-bold text-slate-500 hover:bg-red-50 hover:text-red-600 px-4">
                     <LogOut className="w-5 h-5 mr-2" />
                     <span className="group-data-[collapsible=icon]:hidden uppercase text-[11px] tracking-wider">Sair do Master</span>
@@ -180,7 +179,7 @@ export default function SaaSAdminPage() {
                         <BarChart data={chartData}>
                           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                           <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fontWeight: 'bold', fill: '#94a3b8' }} />
-                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <ChartTooltip content={(props) => <ChartTooltipContent {...props} />} />
                           <Bar dataKey="volume" fill="var(--color-volume)" radius={[8, 8, 0, 0]} barSize={40} />
                           <Bar dataKey="usuarios" fill="var(--color-usuarios)" radius={[8, 8, 0, 0]} barSize={40} />
                         </BarChart>

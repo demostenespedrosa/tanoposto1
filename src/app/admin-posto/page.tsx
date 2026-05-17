@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from "react"
@@ -144,7 +143,7 @@ export default function AdminPostoPage() {
                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 14, fontWeight: 'bold', fill: '#94a3b8' }} dy={10} />
                        <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fontWeight: 'bold', fill: '#94a3b8' }} />
-                       <ChartTooltip content={<ChartTooltipContent />} cursor={{ fill: '#f8fafc' }} />
+                       <ChartTooltip content={(props) => <ChartTooltipContent {...props} />} cursor={{ fill: '#f8fafc' }} />
                        <Bar dataKey="faturamento" fill="var(--color-faturamento)" radius={[10, 10, 0, 0]} barSize={30} />
                        <Bar dataKey="cashback" fill="var(--color-cashback)" radius={[10, 10, 0, 0]} barSize={30} />
                      </BarChart>

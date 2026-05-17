@@ -1,11 +1,9 @@
-
 "use client"
 
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { 
   Building2, 
   Users, 
@@ -23,8 +21,7 @@ import {
   LayoutDashboard,
   FileText,
   Settings,
-  LogOut,
-  ChevronRight
+  LogOut
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
@@ -111,6 +108,14 @@ export default function AdminEmpresaPage() {
                   </SidebarMenuButton>
                 </Link>
               </SidebarMenuItem>
+              <SidebarMenuItem>
+                <Link href="/" className="w-full">
+                  <SidebarMenuButton className="h-12 rounded-xl font-bold text-slate-500 hover:bg-red-50 hover:text-red-600 px-4">
+                    <LogOut className="w-5 h-5 mr-2" />
+                    <span className="group-data-[collapsible=icon]:hidden uppercase text-[11px] tracking-wider">Sair</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarFooter>
         </Sidebar>
@@ -178,7 +183,7 @@ export default function AdminEmpresaPage() {
                         <BarChart data={chartData}>
                           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                           <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fontWeight: 'bold', fill: '#94a3b8' }} />
-                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <ChartTooltip content={(props) => <ChartTooltipContent {...props} />} />
                           <Bar dataKey="valor" fill="var(--color-valor)" radius={[8, 8, 0, 0]} barSize={40} />
                         </BarChart>
                       </ChartContainer>
@@ -400,4 +405,3 @@ export default function AdminEmpresaPage() {
     </SidebarProvider>
   )
 }
-
