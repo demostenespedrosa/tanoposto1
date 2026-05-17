@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { useRouter } from "next/navigation"
 import { 
   MapPin, 
   Search, 
@@ -34,6 +35,7 @@ import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
 
 export default function StationsPage() {
+  const router = useRouter()
   const [view, setView] = useState<"list" | "map">("list")
   const [selectedFuel, setSelectedFuel] = useState("gasolina")
   const [sortBy, setSortBy] = useState<"distance" | "price">("distance")
@@ -162,8 +164,11 @@ export default function StationsPage() {
     setIsFuelingDialogOpen(false);
     toast({
       title: "Cupom Gerado!",
-      description: "Seu cupom de abastecimento está ativo na aba Cupons.",
+      description: "Seu cupom de abastecimento está ativo. Redirecionando...",
     });
+    
+    // Redireciona para a tela de cupons
+    router.push('/coupons');
   }
 
   // Tela de Detalhes do Posto
