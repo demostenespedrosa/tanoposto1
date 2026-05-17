@@ -5,7 +5,7 @@ import { Navigation } from "@/components/Navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { User, Settings, Bell, Shield, LogOut, ChevronRight, CreditCard, History, HelpCircle, Store, UserCheck } from "lucide-react"
+import { User, Settings, Bell, Shield, LogOut, ChevronRight, CreditCard, History, HelpCircle, Store, UserCheck, Building2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 
@@ -14,6 +14,7 @@ export default function ProfilePage() {
     { icon: History, label: "Histórico de Abastecimento", color: "text-blue-500", href: "#" },
     { icon: CreditCard, label: "Métodos de Pagamento", color: "text-green-500", href: "#" },
     { icon: Bell, label: "Notificações", color: "text-orange-500", href: "#" },
+    { icon: Building2, label: "Portal da Empresa (Gestor)", color: "text-blue-600", href: "/admin-empresa" },
     { icon: Store, label: "Gestão do Posto (Dono)", color: "text-purple-500", href: "/admin-posto" },
     { icon: UserCheck, label: "Operação Frentista", color: "text-slate-700", href: "/frentista" },
     { icon: Settings, label: "Configurações", color: "text-slate-500", href: "#" },
@@ -58,7 +59,7 @@ export default function ProfilePage() {
             <Link 
               key={i} 
               href={item.href}
-              className="w-full bg-white p-4 rounded-2xl shadow-sm border border-slate-50 flex items-center justify-between transition-colors hover:bg-slate-50 active:scale-[0.98] group"
+              className="w-full bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between transition-colors hover:bg-slate-50 active:scale-[0.98] group"
             >
               <div className="flex items-center gap-4">
                 <div className={cn("p-2 bg-slate-50 rounded-xl", item.color)}>
