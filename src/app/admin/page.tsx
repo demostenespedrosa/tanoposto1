@@ -21,10 +21,13 @@ import {
   ArrowLeft,
   LayoutDashboard,
   LogOut,
-  Bell
+  Bell,
+  Loader2
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { useAuth } from "@/hooks/useAuth"
+import { useRouter } from "next/navigation"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import {
@@ -42,6 +45,21 @@ import {
 
 function SaaSAdminContent() {
   const [activeView, setActiveView] = useState("dashboard")
+  const { logout } = useAuth()
+  const router = useRouter()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true)
+      await logout()
+      router.push('/login')
+    } catch (error) {
+      console.error('Logout error:', error)
+    } finally {
+      setIsLoggingOut(false)
+    }
+  }
 
   const chartData = [
     { name: "Jan", volume: 120000, usuarios: 4500 },
@@ -148,17 +166,17 @@ function SaaSAdminContent() {
                 {/* Master KPIs */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
-                    { label: "Postos Ativos", val: "1.242", trend: "+12", icon: Store, color: "primary" },
-                    { label: "Empresas Parceiras", val: "482", trend: "+4", icon: Building2, color: "blue-500" },
-                    { label: "Base de Usuários", val: "128.500", trend: "+2.4k", icon: Users, color: "orange-500" },
-                    { label: "GMV Transacionado", val: "R$ 4.8M", trend: "+18%", icon: TrendingUp, color: "green-500" },
+                    { label: "Postos Ativos", val: "1.242", trend: "+12", icon: Store, color: "text-primary" },
+                    { label: "Empresas Parceiras", val: "482", trend: "+4", icon: Building2, color: "text-blue-500" },
+                    { label: "Base de Usuários", val: "128.500", trend: "+2.4k", icon: Users, color: "text-orange-500" },
+                    { label: "GMV Transacionado", val: "R$ 4.8M", trend: "+18%", icon: TrendingUp, color: "text-green-500" },
                   ].map((kpi, i) => {
                     const Icon = kpi.icon
                     return (
                       <Card key={i} className="border-none shadow-lg bg-white overflow-hidden transition-all hover:scale-[1.02]">
                         <CardContent className="p-7 space-y-4">
                           <div className="flex justify-between items-center">
-                            <div className={cn("p-2 rounded-xl bg-opacity-10", i === 0 ? "bg-primary text-primary" : `bg-${kpi.color} text-${kpi.color}`)}>
+                            <div className={cn("p-2 rounded-xl bg-opacity-10", i === 0 ? "bg-primary text-primary" : `bg-slate-100 ${kpi.color}`)}>
                               <Icon className="w-6 h-6" />
                             </div>
                             <Badge variant="outline" className="text-[10px] h-6 px-3 border-none font-bold uppercase tracking-widest bg-slate-50 text-slate-500">
