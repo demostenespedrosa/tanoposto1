@@ -30,6 +30,7 @@ import { toast } from "@/hooks/use-toast"
 import { db } from "@/lib/firebase"
 import { collection, onSnapshot, query, where, orderBy } from "firebase/firestore"
 import dynamic from "next/dynamic"
+import { Station, calculateDistance, getCurrentLocation } from "@/hooks/useStations"
 
 // Importar o mapa dinamicamente para evitar erro de SSR do Leaflet
 const MapView = dynamic(() => import("@/components/MapView"), { 
