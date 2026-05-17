@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useState } from "react"
@@ -48,18 +47,18 @@ export default function Home() {
           </div>
         </header>
 
-        {/* Resumo de Saldo e Vale */}
+        {/* Resumo de Economia e Pontos */}
         <div className="grid grid-cols-2 gap-4">
           <Card className="border-none shadow-md bg-white overflow-hidden relative group">
             <div className="absolute top-0 right-0 p-2 opacity-5">
-              <Building2 className="w-12 h-12 text-primary" />
+              <TrendingDown className="w-12 h-12 text-primary" />
             </div>
             <CardContent className="p-4 flex flex-col items-center justify-center text-center space-y-1">
               <div className="p-2 bg-green-50 rounded-full mb-1">
-                <Wallet className="w-5 h-5 text-primary" />
+                <TrendingDown className="w-5 h-5 text-primary" />
               </div>
-              <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Meu Saldo</p>
-              <p className="text-xl font-headline font-bold text-slate-800">R$ 372,60</p>
+              <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Já economizei</p>
+              <p className="text-xl font-headline font-bold text-slate-800">R$ 1.240,50</p>
             </CardContent>
           </Card>
           <Card className="border-none shadow-md bg-white overflow-hidden relative group">
@@ -105,7 +104,7 @@ export default function Home() {
             { icon: Fuel, label: "Abastecer", color: "bg-green-100 text-green-700", href: "/stations" },
             { icon: MapPin, label: "Postos", color: "bg-blue-100 text-blue-700", href: "/stations" },
             { icon: Gift, label: "Cupons", color: "bg-purple-100 text-purple-700", href: "/coupons" },
-            { icon: Wallet, label: "Vale", color: "bg-orange-100 text-orange-700", href: "/wallet" },
+            { icon: Wallet, label: "Carteira", color: "bg-orange-100 text-orange-700", href: "/wallet" },
           ].map((item, i) => (
             <Link key={i} href={item.href} className="flex flex-col items-center gap-2 group">
               <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-all group-hover:-translate-y-1 group-hover:shadow-lg shadow-sm", item.color)}>
