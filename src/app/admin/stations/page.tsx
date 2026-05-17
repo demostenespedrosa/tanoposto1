@@ -109,16 +109,35 @@ export default function AdminStationsPage() {
     e.preventDefault()
     setIsSubmitting(true)
     try {
+      // Padronização dos preços para pump e app
+      const standardizedPrices: Record<string, { pump: number, app: number }> = {}
+      Object.entries(stationPrices).forEach(([fuelId, info]) => {
+        standardizedPrices[fuelId] = {
+          pump: Number(info.normal),
+          app: Number(info.discount)
+        }
+      })
+
       await addDoc(collection(db, 'stations'), {
-        ...formData,
-        prices: stationPrices,
+        name: formData.name,
+        address: formData.address,
+        latitude: Number(formData.lat),
+        longitude: Number(formData.lng),
+        hours: formData.hours,
+        logo: formData.logo,
+        services: formData.services,
+        prices: standardizedPrices,
+        status: "ativo",
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       })
       toast({ title: "Sucesso", description: "Posto cadastrado com sucesso!" })
       setIsModalOpen(false)
+      setFormData({ name: '', address: '', lat: '', lng: '', hours: '', logo: '', services: [] })
+      setStationPrices({})
       fetchData()
     } catch (error) {
+      console.error(error)
       toast({ title: "Erro", description: "Erro ao salvar posto.", variant: "destructive" })
     } finally {
       setIsSubmitting(false)
@@ -206,12 +225,14 @@ export default function AdminStationsPage() {
                     <div className="space-y-2">
                       {Object.entries(station.prices || {}).slice(0, 2).map(([fuelId, prices]: any) => {
                         const fuelName = fuelTypes.find(f => f.id === fuelId)?.name || 'Combustível'
+                        const pumpPrice = prices.pump || prices.normal
+                        const appPrice = prices.app || prices.discount
                         return (
                           <div key={fuelId} className="flex justify-between items-center text-xs">
                             <span className="font-bold text-slate-600">{fuelName}</span>
                             <div className="flex gap-3 font-mono">
-                              <span className="text-slate-400 line-through">R${prices.normal}</span>
-                              <span className="text-primary font-bold">R${prices.discount}</span>
+                              <span className="text-slate-400 line-through">R${Number(pumpPrice).toFixed(2)}</span>
+                              <span className="text-primary font-bold">R${Number(appPrice).toFixed(2)}</span>
                             </div>
                           </div>
                         )

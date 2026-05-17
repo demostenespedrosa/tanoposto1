@@ -9,22 +9,22 @@ export interface Station {
   id: string;
   name: string;
   address: string;
-  city?: string;
-  state?: string;
-  zipCode?: string;
-  latitude: number | string;
-  longitude: number | string;
-  status: string;
-  createdAt?: any;
+  latitude: number;
+  longitude: number;
+  status: "ativo" | "inativo";
   logo?: string;
-  prices?: {
+  prices: {
     [fuelId: string]: {
       pump: number;
       app: number;
     }
   };
-  // Campos calculados localmente
-  distance?: number;
+  services: string[];
+  hours?: string;
+  createdAt?: any;
+  updatedAt?: any;
+  // Campo calculado localmente
+  dist?: number;
 }
 
 /**
