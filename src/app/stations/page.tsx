@@ -188,9 +188,8 @@ function StationsContent() {
   }
 
   if (selectedStation) {
-    return (
-      <main className="min-h-screen pb-32 bg-slate-50 text-slate-900 animate-in fade-in slide-in-from-right duration-300">
-        <div className="relative h-64 w-full">
+      <main className="min-h-screen pb-40 bg-slate-50 text-slate-900 animate-in fade-in slide-in-from-right duration-300">
+        <div className="relative h-72 w-full">
           {selectedStation.logo ? (
              <Image 
               src={selectedStation.logo} 
@@ -203,7 +202,7 @@ function StationsContent() {
               <Fuel className="w-12 h-12 text-slate-400" />
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-transparent to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-transparent to-black/40" />
           <Button 
             variant="ghost" 
             size="icon" 
@@ -211,47 +210,80 @@ function StationsContent() {
               if (initialSelectedId) router.push('/stations')
               setSelectedStationId(null)
             }}
-            className="absolute top-4 left-4 bg-white/80 backdrop-blur-md rounded-full h-10 w-10 shadow-sm"
+            className="absolute top-4 left-4 bg-white/80 backdrop-blur-md rounded-full h-10 w-10 shadow-sm z-20"
           >
             <ChevronLeft className="w-6 h-6" />
           </Button>
         </div>
 
-        <div className="max-w-lg mx-auto px-4 -mt-12 relative z-10 space-y-6">
-          <Card className="border-none shadow-xl bg-white overflow-hidden">
-            <CardContent className="p-6 space-y-4">
-              <div className="flex gap-4 items-start">
-                <div className="w-20 h-20 rounded-2xl border border-slate-100 overflow-hidden relative shrink-0 shadow-md bg-slate-50 flex items-center justify-center">
+        <div className="max-w-lg mx-auto px-4 -mt-20 relative z-10 space-y-6">
+          <Card className="border-none shadow-2xl bg-white overflow-hidden rounded-[2.5rem]">
+            <CardContent className="p-8 space-y-6">
+              <div className="flex gap-5 items-start">
+                <div className="w-24 h-24 rounded-3xl border border-slate-100 overflow-hidden relative shrink-0 shadow-xl bg-white flex items-center justify-center p-3">
                   {selectedStation.logo ? (
-                    <Image src={selectedStation.logo} alt={selectedStation.name} fill className="object-cover" />
+                    <Image src={selectedStation.logo} alt={selectedStation.name} fill className="object-contain p-2" />
                   ) : (
-                    <Fuel className="w-8 h-8 text-slate-300" />
+                    <Fuel className="w-10 h-10 text-slate-200" />
                   )}
                 </div>
-                <div className="flex-1 space-y-1">
-                  <h1 className="text-xl font-bold text-slate-800">{selectedStation.name}</h1>
-                  <p className="text-xs text-muted-foreground leading-relaxed flex items-start gap-1">
-                    <MapPin className="w-3 h-3 text-slate-400 mt-0.5" /> {selectedStation.address}
-                  </p>
-                  <div className="flex items-center gap-3 mt-2">
-                    <div className="flex items-center gap-1 bg-yellow-50 px-2 py-0.5 rounded-full">
-                      <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                      <span className="text-[10px] font-bold text-yellow-700">4.8</span>
+                <div className="flex-1 space-y-2">
+                  <div className="flex justify-between items-start">
+                    <h1 className="text-2xl font-bold text-slate-800 uppercase italic tracking-tight leading-tight">{selectedStation.name}</h1>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 bg-yellow-400/10 px-3 py-1 rounded-full shrink-0">
+                      <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
+                      <span className="text-xs font-bold text-yellow-700">4.8</span>
                     </div>
-                    <span className="text-[10px] font-bold text-primary">
-                      {selectedStation.dist ? `${selectedStation.dist.toFixed(1)} km de você` : "Calculando distância..."}
-                    </span>
+                    <Button variant="ghost" size="sm" className="h-auto p-0 text-[10px] font-bold text-primary uppercase tracking-widest hover:bg-transparent">
+                      Avaliar posto
+                    </Button>
                   </div>
                 </div>
               </div>
+
+              <div className="grid grid-cols-1 gap-4 py-2 border-y border-slate-50 font-medium">
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <div className="space-y-0.5">
+                    <p className="text-xs text-slate-400 uppercase tracking-widest font-bold">Endereço</p>
+                    <p className="text-sm text-slate-700 leading-relaxed">{selectedStation.address}</p>
+                    <p className="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">
+                      {selectedStation.dist ? `A ${selectedStation.dist.toFixed(1)} km de você` : "Calculando distância..."}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <div className="space-y-0.5">
+                    <p className="text-xs text-slate-400 uppercase tracking-widest font-bold">Funcionamento</p>
+                    <p className="text-sm text-slate-700">{selectedStation.hours || "24 horas (todos os dias)"}</p>
+                  </div>
+                </div>
+              </div>
+
+              {selectedStation.services && selectedStation.services.length > 0 && (
+                <div className="space-y-3">
+                  <p className="text-xs text-slate-400 uppercase tracking-widest font-bold">Serviços no Local</p>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedStation.services.map((service, i) => (
+                      <Badge key={i} variant="secondary" className="bg-slate-50 text-slate-500 font-bold text-[9px] uppercase tracking-widest px-3 py-1.5 border-none rounded-xl capitalize">
+                        {service}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
 
           <div className="space-y-4">
-            <h3 className="font-bold text-slate-800 text-lg flex items-center gap-2">
-              <Fuel className="w-5 h-5 text-primary" /> Tabela de Preços
+            <h3 className="font-bold text-slate-800 text-lg flex items-center gap-2 uppercase italic tracking-tight">
+              <Fuel className="w-5 h-5 text-primary" /> Combustíveis
             </h3>
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 gap-3">
               {fuelTypes.map((fuel) => {
                 const priceData = (selectedStation.prices as any)?.[fuel.id];
                 if (!priceData) return null;
@@ -262,20 +294,23 @@ function StationsContent() {
                 if (!pumpPrice && !appPrice) return null;
 
                 return (
-                  <Card key={fuel.id} className="border-none shadow-md bg-white overflow-hidden">
-                    <CardContent className="p-4 flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-slate-50 rounded-xl capitalize font-bold text-xs text-slate-600">
-                          {fuel.name}
+                  <Card key={fuel.id} className="border-none shadow-xl bg-white rounded-3xl overflow-hidden ring-1 ring-slate-100/50">
+                    <CardContent className="p-5 flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center font-bold text-[10px] text-slate-600 uppercase">
+                          {fuel.name.substring(0, 3)}
                         </div>
                         <div>
-                          <p className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">Bomba</p>
-                          <p className="text-sm font-bold text-slate-400 line-through">R$ {Number(pumpPrice)?.toFixed(2)}</p>
+                          <p className="text-[9px] font-bold text-slate-800 uppercase tracking-widest">{fuel.name}</p>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <span className="text-[10px] font-bold text-slate-300 line-through">R$ {Number(pumpPrice)?.toFixed(2)}</span>
+                            <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">(BOMBA)</span>
+                          </div>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-[8px] font-bold text-primary uppercase tracking-widest">No App</p>
-                        <p className="text-xl font-bold text-primary">R$ {Number(appPrice)?.toFixed(2)}</p>
+                        <p className="text-[9px] font-bold text-primary uppercase tracking-[0.15em]">Preço no App</p>
+                        <p className="text-2xl font-bold text-primary tracking-tighter">R$ {Number(appPrice)?.toFixed(2)}</p>
                       </div>
                     </CardContent>
                   </Card>
