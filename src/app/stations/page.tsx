@@ -417,8 +417,13 @@ function StationsContent() {
                         <div className="flex flex-col justify-end">
                           <div className="flex flex-wrap gap-2 justify-end">
                             {['gasolina', 'etanol', 'diesel'].map((f) => {
-                              const price = (station.prices as any)?.[f]?.app;
+                              // Tentar pegar o preço em 'app' ou 'discount'
+                              const fuelData = (station.prices as any)?.[f];
+                              if (!fuelData) return null;
+                              
+                              const price = fuelData.app || fuelData.discount;
                               if (!price) return null;
+
                               return (
                                 <div key={f} className="text-right bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
                                   <p className="text-[7px] text-muted-foreground font-bold uppercase tracking-widest leading-none">
