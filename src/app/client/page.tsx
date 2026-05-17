@@ -242,32 +242,6 @@ function ClientContent() {
   )
 }
 
-             <div className="absolute top-0 right-0 p-2 opacity-5">
-              <Star className="w-12 h-12 text-yellow-500" />
-            </div>
-            <CardContent className="p-4 flex flex-col items-center justify-center text-center space-y-1">
-              <div className="p-2 bg-yellow-50 rounded-full mb-1">
-                <Star className="w-5 h-5 text-yellow-500" />
-              </div>
-              <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Meus Pontos</p>
-              <p className="text-xl font-headline font-bold text-slate-800">12.450</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Banners de Publicidade/Benefícios */}
-        <Carousel className="w-full" opts={{ loop: true }}>
-          <CarouselContent>
-            {banners.map((banner) => (
-              <CarouselItem key={banner.id}>
-                <div className="relative h-48 w-full rounded-[2rem] overflow-hidden shadow-lg group">
-                  <Image 
-                    src={banner.img} 
-                    alt={banner.title} 
-                    fill 
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    data-ai-hint="gas station advertisement"
-                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
                     <h3 className="text-white font-bold text-xl leading-tight">{banner.title}</h3>
                     <p className="text-white/80 text-sm mt-1">{banner.desc}</p>

@@ -183,31 +183,6 @@ export default function CouponsPage() {
   )
 }
 
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-slate-800 text-lg">{coupon.title}</h3>
-                    <p className="text-xs text-muted-foreground">{coupon.desc}</p>
-                  </div>
-                  <div className="flex items-center gap-2 pt-2">
-                    <div className="flex-1 bg-slate-50 border border-dashed border-slate-200 p-2 rounded-lg text-center font-mono font-bold text-slate-600 tracking-wider">
-                      {coupon.code}
-                    </div>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      onClick={() => copyToClipboard(coupon.code)}
-                      className="rounded-lg h-10 w-10 hover:bg-primary/5"
-                    >
-                      <Copy className="w-4 h-4 text-primary" />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <Card className="bg-gradient-to-br from-primary to-green-600 border-none shadow-xl text-white">
           <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
             <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
               <Gift className="w-8 h-8 text-white" />
