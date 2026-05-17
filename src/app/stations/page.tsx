@@ -117,7 +117,7 @@ function StationsContent() {
     if (selectedStation) {
       const lat = selectedStation.latitude
       const lng = selectedStation.longitude
-      window.open(https://www.google.com/maps/dir/?api=1&destination=\,\, '_blank');
+      window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
     }
   }
 
@@ -126,7 +126,7 @@ function StationsContent() {
     
     const code1 = Math.floor(100 + Math.random() * 900);
     const code2 = Math.floor(100 + Math.random() * 900);
-    const formattedCode = \-\;
+    const formattedCode = `${code1}-${code2}`;
 
     const token = {
       id: formattedCode,
@@ -208,8 +208,8 @@ function StationsContent() {
                       <Star className=\"w-3 h-3 text-yellow-500 fill-yellow-500\" />
                       <span className=\"text-[10px] font-bold text-yellow-700\">4.8</span>
                     </div>
-                    <span className=\"text-[10px] font-bold text-primary\">
-                      {selectedStation.dist ? \ km de você : \"Calculando distância...\"}
+                    <span className="text-[10px] font-bold text-primary">
+                      {selectedStation.dist ? `${selectedStation.dist.toFixed(1)} km de você` : "Calculando distância..."}
                     </span>
                   </div>
                 </div>
@@ -403,8 +403,8 @@ function StationsContent() {
                           </div>
                         )}
                         <div className=\"absolute top-2 left-2\">
-                          <Badge className=\"bg-white/90 backdrop-blur-md text-slate-800 text-[8px] font-bold px-2 py-0.5 border-none shadow-sm\">
-                            {station.dist ? \ km : \"...\"}
+                          <Badge className="bg-white/90 backdrop-blur-md text-slate-800 text-[8px] font-bold px-2 py-0.5 border-none shadow-sm">
+                            {station.dist ? `${station.dist.toFixed(1)} km` : "..."}
                           </Badge>
                         </div>
                       </div>
