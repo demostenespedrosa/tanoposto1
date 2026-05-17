@@ -414,16 +414,24 @@ function StationsContent() {
                           <h4 className="font-bold text-slate-800">{station.name}</h4>
                           <p className="text-[10px] text-muted-foreground truncate leading-relaxed">{station.address}</p>
                         </div>
-                        <div className="flex justify-between items-end">
-                          <div className="space-y-0.5">
-                            <p className="text-[8px] text-muted-foreground font-bold uppercase tracking-widest">
-                              {fuelTypes.find(f => f.id === selectedFuel)?.label}
-                            </p>
-                            <p className="text-xl font-bold text-primary">
-                              R$ {(station.prices as any)?.[selectedFuel]?.app?.toFixed(2) || "---"}
-                            </p>
+                        <div className="flex flex-col justify-end">
+                          <div className="flex flex-wrap gap-2 justify-end">
+                            {['gasolina', 'etanol', 'diesel'].map((f) => {
+                              const price = (station.prices as any)?.[f]?.app;
+                              if (!price) return null;
+                              return (
+                                <div key={f} className="text-right bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
+                                  <p className="text-[7px] text-muted-foreground font-bold uppercase tracking-widest leading-none">
+                                    {f === 'gasolina' ? 'Gas' : f === 'etanol' ? 'Eta' : 'Die'}
+                                  </p>
+                                  <p className="text-xs font-bold text-primary leading-tight">
+                                    R$ {Number(price).toFixed(2)}
+                                  </p>
+                                </div>
+                              )
+                            })}
                           </div>
-                          <div className="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-lg">
+                          <div className="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-lg mt-2 self-end">
                             <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
                             <span className="text-[10px] font-bold text-yellow-700">4.8</span>
                           </div>
