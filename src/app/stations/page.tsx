@@ -1,14 +1,13 @@
 
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo } from "react"
 import { Navigation } from "@/components/Navigation"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { useRouter } from "next/navigation"
 import { 
   MapPin, 
@@ -22,12 +21,10 @@ import {
   ChevronLeft, 
   Clock, 
   Zap,
-  CheckCircle2,
   Droplets,
   AirVent,
   Store,
   Car,
-  Calculator,
   QrCode
 } from "lucide-react"
 import Image from "next/image"
@@ -43,9 +40,6 @@ export default function StationsPage() {
   
   // Fueling state
   const [isFuelingDialogOpen, setIsFuelingDialogOpen] = useState(false)
-  const [fuelingMode, setFuelingMode] = useState<"reais" | "litros" | "total">("reais")
-  const [fuelingValue, setFuelingValue] = useState<string>("")
-  const [selectedFuelType, setSelectedFuelType] = useState<string>("gasolina")
 
   const fuelTypes = [
     { id: "gasolina", label: "Gasolina" },
@@ -127,20 +121,6 @@ export default function StationsPage() {
 
   const selectedStation = stationsData.find(s => s.id === selectedStationId)
 
-  // Calculations for fueling
-  const calculatedOutput = useMemo(() => {
-    if (!selectedStation || !fuelingValue || fuelingMode === "total") return null;
-    const pricePerLiter = selectedStation.prices[selectedFuelType as keyof typeof selectedStation.prices].app;
-    const val = parseFloat(fuelingValue.replace(',', '.'));
-    if (isNaN(val)) return null;
-
-    if (fuelingMode === "reais") {
-      return { liters: (val / pricePerLiter).toFixed(2), total: val.toFixed(2) };
-    } else {
-      return { liters: val.toFixed(2), total: (val * pricePerLiter).toFixed(2) };
-    }
-  }, [selectedStation, fuelingValue, fuelingMode, selectedFuelType]);
-
   const handleOpenMaps = () => {
     if (selectedStation) {
       window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedStation.name + " " + selectedStation.address)}`, '_blank');
@@ -150,12 +130,14 @@ export default function StationsPage() {
   const handleGenerateToken = () => {
     if (!selectedStation) return;
     
+    // Gera código de 6 dígitos formatado 000-000
+    const code1 = Math.floor(100 + Math.random() * 900);
+    const code2 = Math.floor(100 + Math.random() * 900);
+    const formattedCode = `${code1}-${code2}`;
+
     const token = {
-      id: `TOKEN-${Math.floor(1000 + Math.random() * 9000)}`,
+      id: formattedCode,
       stationName: selectedStation.name,
-      fuelType: selectedFuelType,
-      value: fuelingMode === "total" ? "Tanque Cheio" : `R$ ${calculatedOutput?.total}`,
-      liters: fuelingMode === "total" ? "Variável" : `${calculatedOutput?.liters} L`,
       expiresAt: new Date(Date.now() + 15 * 60000).toISOString(),
       active: true
     }
@@ -163,15 +145,13 @@ export default function StationsPage() {
     localStorage.setItem('active_fuel_token', JSON.stringify(token));
     setIsFuelingDialogOpen(false);
     toast({
-      title: "Cupom Gerado!",
-      description: "Seu cupom de abastecimento está ativo. Redirecionando...",
+      title: "Código Gerado!",
+      description: "Apresente o código ao frentista após o abastecimento.",
     });
     
-    // Redireciona para a tela de cupons
     router.push('/coupons');
   }
 
-  // Tela de Detalhes do Posto
   if (selectedStation) {
     return (
       <main className="min-h-screen pb-32 bg-slate-50 text-slate-900 animate-in fade-in slide-in-from-right duration-300">
@@ -286,98 +266,30 @@ export default function StationsPage() {
           </div>
         </div>
 
-        {/* Dialog de Abastecimento */}
         <Dialog open={isFuelingDialogOpen} onOpenChange={setIsFuelingDialogOpen}>
           <DialogContent className="sm:max-w-md rounded-3xl">
             <DialogHeader>
-              <DialogTitle className="font-headline font-bold text-slate-800">Quanto deseja abastecer?</DialogTitle>
-              <DialogDescription>
-                Selecione o combustível e o valor ou litros.
+              <DialogTitle className="font-headline font-bold text-slate-800 text-center">Tudo pronto para abastecer?</DialogTitle>
+              <DialogDescription className="text-center">
+                Abasteça normalmente no posto. Ao final, apresente o código de 6 dígitos ao frentista para garantir seu desconto.
               </DialogDescription>
             </DialogHeader>
 
-            <div className="space-y-6 py-4">
-              {/* Seleção de Combustível */}
-              <div className="flex gap-2">
-                {Object.keys(selectedStation.prices).map((fuel) => (
-                  <Button
-                    key={fuel}
-                    variant={selectedFuelType === fuel ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedFuelType(fuel)}
-                    className={cn(
-                      "flex-1 rounded-xl h-10 font-bold text-[10px] uppercase",
-                      selectedFuelType === fuel ? "bg-primary text-white" : "text-slate-500"
-                    )}
-                  >
-                    {fuel}
-                  </Button>
-                ))}
-              </div>
-
-              {/* Tabs de Modo */}
-              <Tabs defaultValue="reais" onValueChange={(v) => {setFuelingMode(v as any); setFuelingValue("")}}>
-                <TabsList className="grid w-full grid-cols-3 bg-slate-100 p-1 rounded-xl">
-                  <TabsTrigger value="reais" className="rounded-lg text-[10px] font-bold uppercase">Em Reais</TabsTrigger>
-                  <TabsTrigger value="litros" className="rounded-lg text-[10px] font-bold uppercase">Em Litros</TabsTrigger>
-                  <TabsTrigger value="total" className="rounded-lg text-[10px] font-bold uppercase">Encher</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="reais" className="mt-4 space-y-4">
-                  <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-slate-400">R$</span>
-                    <Input 
-                      className="pl-12 h-14 bg-slate-50 border-slate-200 rounded-2xl font-bold text-xl" 
-                      placeholder="0,00"
-                      type="number"
-                      value={fuelingValue}
-                      onChange={(e) => setFuelingValue(e.target.value)}
-                    />
-                  </div>
-                  {calculatedOutput && (
-                    <div className="bg-green-50 p-4 rounded-2xl flex justify-between items-center">
-                      <span className="text-xs font-bold text-slate-600">Você receberá aprox.</span>
-                      <span className="text-lg font-headline font-bold text-primary">{calculatedOutput.liters} L</span>
-                    </div>
-                  )}
-                </TabsContent>
-
-                <TabsContent value="litros" className="mt-4 space-y-4">
-                  <div className="relative">
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-slate-400">L</span>
-                    <Input 
-                      className="pr-12 h-14 bg-slate-50 border-slate-200 rounded-2xl font-bold text-xl" 
-                      placeholder="0,00"
-                      type="number"
-                      value={fuelingValue}
-                      onChange={(e) => setFuelingValue(e.target.value)}
-                    />
-                  </div>
-                  {calculatedOutput && (
-                    <div className="bg-green-50 p-4 rounded-2xl flex justify-between items-center">
-                      <span className="text-xs font-bold text-slate-600">Valor total com desconto:</span>
-                      <span className="text-lg font-headline font-bold text-primary">R$ {calculatedOutput.total}</span>
-                    </div>
-                  )}
-                </TabsContent>
-
-                <TabsContent value="total" className="mt-4">
-                  <div className="bg-blue-50 p-6 rounded-2xl text-center space-y-2">
-                    <Zap className="w-8 h-8 text-blue-500 mx-auto" />
-                    <p className="font-bold text-blue-700">Modo Tanque Cheio Ativado</p>
-                    <p className="text-xs text-blue-600/80">O valor final será calculado na bomba aplicando seu desconto exclusivo.</p>
-                  </div>
-                </TabsContent>
-              </Tabs>
+            <div className="py-6 flex flex-col items-center gap-4">
+               <div className="p-4 bg-primary/5 rounded-full">
+                  <Zap className="w-12 h-12 text-primary" />
+               </div>
+               <p className="text-sm font-medium text-center text-slate-600">
+                  O desconto será aplicado automaticamente pelo frentista no momento do pagamento via app.
+               </p>
             </div>
 
             <DialogFooter>
               <Button 
                 onClick={handleGenerateToken}
-                disabled={fuelingMode !== "total" && !fuelingValue}
                 className="w-full h-14 bg-primary text-white font-bold rounded-2xl"
               >
-                GERAR CUPOM DE ATIVAÇÃO
+                GERAR CÓDIGO DE ATIVAÇÃO
               </Button>
             </DialogFooter>
           </DialogContent>

@@ -68,7 +68,6 @@ export default function CouponsPage() {
           </div>
         </header>
 
-        {/* Cupom de Abastecimento Ativo */}
         {activeToken && (
           <Card className="border-none shadow-xl bg-white overflow-hidden animate-in zoom-in-95 duration-300">
             <div className="bg-primary p-3 flex justify-between items-center text-white">
@@ -81,30 +80,23 @@ export default function CouponsPage() {
               </Button>
             </div>
             <CardContent className="p-6 space-y-6">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="font-bold text-slate-800 text-lg">{activeToken.stationName}</h3>
-                  <p className="text-xs text-muted-foreground uppercase font-bold text-primary">{activeToken.fuelType}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xl font-headline font-bold text-slate-800">{activeToken.value}</p>
-                  <p className="text-[10px] text-muted-foreground">{activeToken.liters}</p>
-                </div>
+              <div className="text-center space-y-2">
+                <h3 className="font-bold text-slate-800 text-lg">{activeToken.stationName}</h3>
+                <p className="text-xs text-muted-foreground uppercase font-bold text-primary">Apresente após o abastecimento</p>
               </div>
 
-              <div className="flex flex-col items-center gap-4 py-2 border-y border-slate-50">
-                <div className="p-4 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-                  <QrCode className="w-32 h-32 text-slate-800" />
+              <div className="flex flex-col items-center gap-6 py-4 border-y border-slate-50">
+                <div className="p-6 bg-slate-50 rounded-[2rem] border-2 border-dashed border-primary/20 flex flex-col items-center gap-4">
+                  <span className="text-4xl font-headline font-bold text-primary tracking-[0.2em]">{activeToken.id}</span>
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-mono font-bold text-primary tracking-widest">{activeToken.id}</p>
-                  <p className="text-[9px] text-muted-foreground uppercase tracking-tight">Apresente este código na bomba</p>
+                  <p className="text-[9px] text-muted-foreground uppercase tracking-widest font-bold">Código Dinâmico de 6 Dígitos</p>
                 </div>
               </div>
 
               <div className="flex items-center justify-center gap-2 text-[10px] font-bold text-orange-500 bg-orange-50 p-2 rounded-lg">
                 <Clock className="w-3 h-3" />
-                EXPIRA EM BREVE
+                VÁLIDO POR 15 MINUTOS
               </div>
             </CardContent>
           </Card>
