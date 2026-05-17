@@ -371,6 +371,8 @@ function StationsContent() {
             <Fuel className="w-5 h-5 mr-1" /> ABASTECER
           </Button>
         </div>
+
+        <Navigation />
       </main>
     )
   }
