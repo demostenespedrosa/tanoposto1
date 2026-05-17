@@ -229,8 +229,14 @@ export default function AdminStationsPage() {
 
         {/* Modal Giga de Cadastro */}
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden">
-            <DialogHeader className="p-10 bg-slate-900 text-white">
+          <DialogContent className="max-w-4xl max-h-[85vh] flex flex-col rounded-[2.5rem] border-none shadow-2xl p-0 overflow-hidden bg-white">
+            <DialogHeader className="p-10 bg-slate-900 text-white shrink-0 relative">
+              <button 
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-6 right-6 p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors z-50"
+              >
+                <X className="w-6 h-6" />
+              </button>
               <div className="flex justify-between items-center">
                 <div>
                   <DialogTitle className="text-3xl font-headline font-bold text-white tracking-widest italic uppercase">Integração de Novo Posto</DialogTitle>
@@ -242,7 +248,7 @@ export default function AdminStationsPage() {
               </div>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="p-10 space-y-10">
+            <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-10 py-8 space-y-10 custom-scrollbar">
               {/* Informações Básicas */}
               <div className="space-y-6">
                  <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-primary flex items-center gap-3">
@@ -353,7 +359,7 @@ export default function AdminStationsPage() {
                 </div>
               </div>
 
-              <DialogFooter className="pt-6">
+              <DialogFooter className="pt-6 shrink-0 bg-slate-50 p-8 border-t border-slate-100">
                 <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)} className="rounded-xl h-14 font-bold uppercase text-[10px] tracking-widest text-slate-400">
                   DESCARTAR
                 </Button>
