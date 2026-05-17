@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Navigation } from "@/components/Navigation"
@@ -9,9 +10,9 @@ import { cn } from "@/lib/utils"
 
 export default function MembershipPage() {
   const tiers = [
-    { name: "CORE", price: "$0/mo", features: ["1% Cashback", "Missões Básicas", "Navegação de Rota"], active: false },
-    { name: "ELITE", price: "$9.90/mo", features: ["3% Cashback", "Missões Exclusivas", "Smart-Path Plus", "Monitoramento de Consumo"], active: true },
-    { name: "PREMIUM", price: "$24.90/mo", features: ["5% Cashback", "Telemetria de Veículo", "Abastecimento Concierge", "Descontos em Parceiros"], active: false },
+    { name: "BÁSICO", price: "R$ 0/mês", features: ["1% Cashback", "Missões Básicas", "Navegação de Rota"], active: false },
+    { name: "PLUS", price: "R$ 9,90/mês", features: ["3% Cashback", "Missões Exclusivas", "Rotas Inteligentes Plus", "Monitoramento de Consumo"], active: true },
+    { name: "PREMIUM", price: "R$ 24,90/mês", features: ["5% Cashback", "Telemetria de Veículo", "Abastecimento VIP", "Descontos em Parceiros"], active: false },
   ]
 
   return (
@@ -21,7 +22,7 @@ export default function MembershipPage() {
           <Shield className="w-6 h-6" />
         </div>
         <div>
-          <h1 className="text-2xl font-headline font-bold tracking-tighter">Oktano Nexus</h1>
+          <h1 className="text-2xl font-headline font-bold tracking-tighter">Tá no Posto Club</h1>
           <p className="text-xs text-muted-foreground flex items-center gap-1 uppercase tracking-widest font-bold">
             Níveis de Assinatura
           </p>
@@ -41,7 +42,7 @@ export default function MembershipPage() {
             )}
             <CardHeader>
                <CardTitle className="flex items-center gap-2 font-headline font-bold text-xl">
-                 {tier.name === "ELITE" ? <Zap className="w-5 h-5 text-accent" /> : tier.name === "PREMIUM" ? <Crown className="w-5 h-5 text-yellow-500" /> : <Activity className="w-5 h-5 text-muted-foreground" />}
+                 {tier.name === "PLUS" ? <Zap className="w-5 h-5 text-accent" /> : tier.name === "PREMIUM" ? <Crown className="w-5 h-5 text-yellow-500" /> : <Activity className="w-5 h-5 text-muted-foreground" />}
                  {tier.name}
                </CardTitle>
                <CardDescription className="font-bold text-foreground">{tier.price}</CardDescription>
@@ -74,7 +75,7 @@ export default function MembershipPage() {
         </CardHeader>
         <CardContent>
            <p className="text-xs text-muted-foreground leading-relaxed">
-             Estamos desenvolvendo o <strong>Telemetry Nexus</strong> para sincronização veículo-nuvem. 
+             Estamos desenvolvendo novas integrações para o **Tá no Posto**. 
              Membros Premium poderão monitorar o consumo de combustível em tempo real e receber alertas de manutenção.
            </p>
         </CardContent>

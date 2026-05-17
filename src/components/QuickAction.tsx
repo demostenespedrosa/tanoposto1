@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from "react"
@@ -46,7 +47,7 @@ export function QuickAction() {
               <>
                 <div className="relative p-6 bg-accent rounded-3xl border-2 border-primary/10 group overflow-hidden shadow-inner">
                   <img 
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TANOPPOSTO-SESSION-SECURE" 
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TANOPOSTO-SESSION-SECURE" 
                     alt="Código de Ativação"
                     className="w-48 h-48 relative z-10 transition-opacity"
                   />

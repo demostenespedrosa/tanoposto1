@@ -133,7 +133,7 @@ export default function WalletPage() {
             <Info className="w-6 h-6 text-primary" />
           </div>
           <div className="space-y-2">
-            <h3 className="font-bold text-sm">Sua empresa no Tá no posto</h3>
+            <h3 className="font-bold text-sm">Sua empresa no Tá no Posto</h3>
             <p className="text-[11px] text-slate-400 leading-relaxed">
               O seu saldo de <strong>Vale Combustível</strong> é recarregado automaticamente pela sua empresa. Use-o para abastecer com desconto em qualquer posto parceiro e economize ainda mais!
             </p>

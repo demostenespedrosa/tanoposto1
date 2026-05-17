@@ -3,7 +3,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Tá no posto | Economia Inteligente',
+  title: 'Tá no Posto | Economia Inteligente',
   description: 'O ecossistema de elite para fidelidade em postos e economia de combustível.',
 };
 

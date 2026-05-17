@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Navigation } from "@/components/Navigation"
@@ -12,9 +13,9 @@ import { cn } from "@/lib/utils"
 export default function NavigatorPage() {
   const [isSearching, setIsSearching] = useState(false)
   const [stations] = useState([
-    { name: "Shell V-Power", distance: "2.4 km", routeSavings: "$4.50", price: "$5.10/L", rating: 4.8, active: true },
-    { name: "Petrobras Podium", distance: "4.1 km", routeSavings: "$6.20", price: "$5.05/L", rating: 4.5, active: false },
-    { name: "Ipiranga Pro", distance: "1.8 km", routeSavings: "$1.20", price: "$5.25/L", rating: 4.2, active: false },
+    { name: "Shell V-Power", distance: "2.4 km", routeSavings: "R$ 4,50", price: "R$ 5,10/L", rating: 4.8, active: true },
+    { name: "Petrobras Podium", distance: "4.1 km", routeSavings: "R$ 6,20", price: "R$ 5,05/L", rating: 4.5, active: false },
+    { name: "Ipiranga Pro", distance: "1.8 km", routeSavings: "R$ 1,20", price: "R$ 5,25/L", rating: 4.2, active: false },
   ])
 
   const handleSearch = () => {
@@ -29,9 +30,9 @@ export default function NavigatorPage() {
           <Map className="w-6 h-6" />
         </div>
         <div>
-          <h1 className="text-2xl font-headline font-bold tracking-tighter">Navegador Inteligente</h1>
+          <h1 className="text-2xl font-headline font-bold tracking-tighter">Rotas Tá no Posto</h1>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
-            <DollarSign className="w-3 h-3 text-accent" /> Otimização de Rota Oktano
+            <DollarSign className="w-3 h-3 text-accent" /> Navegação com Economia
           </p>
         </div>
       </header>
@@ -53,7 +54,7 @@ export default function NavigatorPage() {
 
         <div className="relative h-64 w-full bg-secondary/30 rounded-2xl border border-border/50 overflow-hidden group">
           <img 
-            src="https://picsum.photos/seed/oktano-map/1200/800" 
+            src="https://picsum.photos/seed/tano-map/1200/800" 
             alt="Map background" 
             className="w-full h-full object-cover opacity-30 grayscale group-hover:grayscale-0 transition-all"
             data-ai-hint="dark map"

@@ -81,7 +81,7 @@ export default function ProfilePage() {
         </Button>
 
         <div className="text-center">
-          <p className="text-[10px] text-muted-foreground font-mono">Tá no posto v2.4.0 • Made with ❤️ in Brazil</p>
+          <p className="text-[10px] text-muted-foreground font-mono">Tá no Posto v2.4.0 • Made with ❤️ in Brazil</p>
         </div>
 
       </div>

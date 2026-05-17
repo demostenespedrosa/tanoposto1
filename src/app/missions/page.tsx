@@ -27,9 +27,9 @@ export default function MissionsPage() {
           <Target className="w-6 h-6" />
         </div>
         <div>
-          <h1 className="text-2xl font-headline font-bold tracking-tighter">Missões de Lealdade</h1>
+          <h1 className="text-2xl font-headline font-bold tracking-tighter">Missões Tá no Posto</h1>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
-            <ShieldCheck className="w-3 h-3 text-accent" /> Metas de Consumo Oktano
+            <ShieldCheck className="w-3 h-3 text-accent" /> Metas de Consumo Inteligente
           </p>
         </div>
       </header>
