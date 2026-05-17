@@ -1,18 +1,61 @@
 
 "use client"
 
+import { useState, useEffect } from "react"
 import { Navigation } from "@/components/Navigation"
 import { ProtectedRoute } from "@/components/ProtectedRoute"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
-import { Fuel, MapPin, Wallet, Gift, Bell, Star, TrendingDown } from "lucide-react"
+import { Fuel, MapPin, Wallet, Gift, Bell, Star, TrendingDown, Loader2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { db } from "@/lib/firebase"
+import { collection, onSnapshot, query, where } from "firebase/firestore"
+import { calculateDistance, getCurrentLocation, type Station } from "@/hooks/useStations"
 
 function ClientContent() {
+  const [stations, setStations] = useState<Station[]>([])
+  const [loadingStations, setLoadingStations] = useState(true)
+  const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null)
+
+  useEffect(() => {
+    // Pegar localização real
+    getCurrentLocation()
+      .then(loc => setUserLocation(loc))
+      .catch(err => console.error("Erro ao pegar localização:", err))
+
+    // Escutar postos ativos do Firestore
+    const q = query(collection(db, "stations"), where("status", "==", "ativo"))
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const stationsList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Station[]
+      setStations(stationsList)
+      setLoadingStations(false)
+    })
+
+    return () => unsubscribe()
+  }, [])
+
+  // Calcular distâncias e ordenar
+  const sortedNearbyStations = stations.map(station => {
+    let distance = 0
+    if (userLocation) {
+      distance = calculateDistance(
+        userLocation.latitude,
+        userLocation.longitude,
+        Number(station.latitude),
+        Number(station.longitude)
+      )
+    }
+    return { ...station, distance }
+  }).sort((a, b) => (a.distance || 0) - (b.distance || 0))
+    .slice(0, 5) // Mostra os 5 mais pertos no dashboard
+
   const banners = [
     { id: 1, img: "https://picsum.photos/seed/promo1/800/400", title: "Cashback em Dobro!", desc: "Abasteça hoje e ganhe 10%" },
     { id: 2, img: "https://picsum.photos/seed/promo2/800/400", title: "Benefício Corporativo", desc: "Sua empresa agora recarrega seu Vale aqui" },
@@ -123,30 +166,51 @@ function ClientContent() {
           </div>
           <ScrollArea className="w-full whitespace-nowrap">
             <div className="flex w-max space-x-4 pb-6">
-              {nearbyStations.map((posto) => (
-                <Card key={posto.id} className="w-56 border-none shadow-md bg-white overflow-hidden shrink-0 hover:shadow-lg transition-shadow">
-                  <div className="p-4 space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl border border-slate-100 overflow-hidden relative shrink-0">
-                        <Image src={posto.logo} alt={posto.name} fill className="object-cover" />
+              {loadingStations ? (
+                <div className="flex items-center justify-center w-full py-10">
+                  <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                </div>
+              ) : sortedNearbyStations.length > 0 ? (
+                sortedNearbyStations.map((posto) => (
+                  <Card key={posto.id} className="w-56 border-none shadow-md bg-white overflow-hidden shrink-0 hover:shadow-lg transition-shadow">
+                    <div className="p-4 space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-xl border border-slate-100 overflow-hidden relative shrink-0 bg-slate-50 flex items-center justify-center">
+                          {posto.logo ? (
+                            <Image src={posto.logo} alt={posto.name} fill className="object-cover" />
+                          ) : (
+                            <Fuel className="w-6 h-6 text-slate-300" />
+                          )}
+                        </div>
+                        <div className="overflow-hidden">
+                          <h4 className="text-sm font-bold text-slate-800 truncate">{posto.name}</h4>
+                          <p className="text-[10px] text-muted-foreground flex items-center gap-1">
+                            <MapPin className="w-3 h-3" /> 
+                            {posto.distance 
+                              ? `${posto.distance.toFixed(1)} km` 
+                              : "Calculando..."}
+                          </p>
+                        </div>
                       </div>
-                      <div className="overflow-hidden">
-                        <h4 className="text-sm font-bold text-slate-800 truncate">{posto.name}</h4>
-                        <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                          <MapPin className="w-3 h-3" /> {posto.dist}
-                        </p>
+                      <div className="flex justify-between items-center pt-3 border-t border-slate-50">
+                        <div className="space-y-0.5">
+                          <p className="text-[8px] text-muted-foreground font-bold uppercase tracking-widest">A partir de</p>
+                          <p className="text-base font-headline font-bold text-primary">
+                            R$ {posto.prices?.gasolina?.app?.toFixed(2) || "---"}
+                          </p>
+                        </div>
+                        <Link href={`/stations?id=${posto.id}`}>
+                          <Button size="sm" className="h-8 rounded-lg bg-slate-900 text-white font-bold text-[10px]">VER PREÇOS</Button>
+                        </Link>
                       </div>
                     </div>
-                    <div className="flex justify-between items-center pt-3 border-t border-slate-50">
-                      <div className="space-y-0.5">
-                        <p className="text-[8px] text-muted-foreground font-bold uppercase tracking-widest">Gasolina</p>
-                        <p className="text-base font-headline font-bold text-primary">{posto.price}</p>
-                      </div>
-                      <Button size="sm" className="h-8 rounded-lg bg-slate-900 text-white font-bold text-[10px]">VER PREÇOS</Button>
-                    </div>
-                  </div>
-                </Card>
-              ))}
+                  </Card>
+                ))
+              ) : (
+                <div className="p-4 text-center w-56 text-xs text-muted-foreground italic">
+                  Nenhum posto ativo encontrado.
+                </div>
+              )}
             </div>
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
