@@ -2,7 +2,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { QuickAction } from "@/components/QuickAction"
 import { Navigation } from "@/components/Navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -156,7 +155,6 @@ export default function Home() {
 
       </div>
 
-      <QuickAction />
       <Navigation />
     </main>
   )
