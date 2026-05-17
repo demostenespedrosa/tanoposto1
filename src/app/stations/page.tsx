@@ -37,12 +37,13 @@ function StationsContent() {
   const initialSelectedId = searchParams.get('id')
 
   const [view, setView] = useState<"list" | "map">("list")
-  const [selectedFuel, setSelectedFuel] = useState("gasolina")
+  const [selectedFuel, setSelectedFuel] = useState("") // Começar vazio para pegar o primeiro disponível
   const [sortBy, setSortBy] = useState<"distance" | "price">("distance")
   const [selectedStationId, setSelectedStationId] = useState<string | null>(initialSelectedId)
   const [searchTerm, setSearchTerm] = useState("")
 
   const [stations, setStations] = useState<Station[]>([])
+  const [fuelTypes, setFuelTypes] = useState<{id: string, name: string}[]>([])
   const [loading, setLoading] = useState(true)
   const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null)
 
@@ -60,6 +61,19 @@ function StationsContent() {
         })
       })
 
+    // Buscar Combustíveis Dinâmicos
+    const qFuels = query(collection(db, "fuel_types"), orderBy("name"))
+    const unsubscribeFuels = onSnapshot(qFuels, (snapshot) => {
+      const fuels = snapshot.docs.map(doc => ({
+        id: doc.id,
+        name: doc.data().name
+      }))
+      setFuelTypes(fuels)
+      if (fuels.length > 0 && !selectedFuel) {
+        setSelectedFuel(fuels[0].id)
+      }
+    })
+
     const q = query(collection(db, "stations"), where("status", "==", "ativo"))
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const stationsList = snapshot.docs.map(doc => ({
@@ -70,7 +84,10 @@ function StationsContent() {
       setLoading(false)
     })
 
-    return () => unsubscribe()
+    return () => {
+      unsubscribeFuels()
+      unsubscribe()
+    }
   }, [])
 
   useEffect(() => {
@@ -78,12 +95,6 @@ function StationsContent() {
       setSelectedStationId(initialSelectedId)
     }
   }, [initialSelectedId])
-
-  const fuelTypes = [
-    { id: "gasolina", label: "Gasolina" },
-    { id: "etanol", label: "Etanol" },
-    { id: "diesel", label: "Diesel" },
-  ]
 
   const stationsWithDistance = useMemo(() => {
     return stations.map(s => {
@@ -229,8 +240,8 @@ function StationsContent() {
               <Fuel className="w-5 h-5 text-primary" /> Tabela de Preços
             </h3>
             <div className="space-y-3">
-              {['gasolina', 'etanol', 'diesel'].map((f) => {
-                const priceData = (selectedStation.prices as any)?.[f];
+              {fuelTypes.map((fuel) => {
+                const priceData = (selectedStation.prices as any)?.[fuel.id];
                 if (!priceData) return null;
 
                 const pumpPrice = priceData.pump || priceData.normal;
@@ -239,11 +250,11 @@ function StationsContent() {
                 if (!pumpPrice && !appPrice) return null;
 
                 return (
-                  <Card key={f} className="border-none shadow-md bg-white overflow-hidden">
+                  <Card key={fuel.id} className="border-none shadow-md bg-white overflow-hidden">
                     <CardContent className="p-4 flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className="p-2 bg-slate-50 rounded-xl capitalize font-bold text-xs text-slate-600">
-                          {f}
+                          {fuel.name}
                         </div>
                         <div>
                           <p className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">Bomba</p>
@@ -364,7 +375,7 @@ function StationsContent() {
                 selectedFuel === fuel.id ? "bg-primary text-white scale-105 shadow-primary/20" : "bg-white text-slate-500 hover:bg-slate-100"
               )}
             >
-              {fuel.label}
+              {fuel.name}
             </Badge>
           ))}
         </div>
@@ -416,18 +427,17 @@ function StationsContent() {
                         </div>
                         <div className="flex flex-col justify-end">
                           <div className="flex flex-wrap gap-2 justify-end">
-                            {['gasolina', 'etanol', 'diesel'].map((f) => {
-                              // Tentar pegar o preço em 'app' ou 'discount'
-                              const fuelData = (station.prices as any)?.[f];
+                            {fuelTypes.map((fuel) => {
+                              const fuelData = (station.prices as any)?.[fuel.id];
                               if (!fuelData) return null;
                               
                               const price = fuelData.app || fuelData.discount;
                               if (!price) return null;
 
                               return (
-                                <div key={f} className="text-right bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
+                                <div key={fuel.id} className="text-right bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
                                   <p className="text-[7px] text-muted-foreground font-bold uppercase tracking-widest leading-none">
-                                    {f === 'gasolina' ? 'Gas' : f === 'etanol' ? 'Eta' : 'Die'}
+                                    {fuel.name.substring(0, 3)}
                                   </p>
                                   <p className="text-xs font-bold text-primary leading-tight">
                                     R$ {Number(price).toFixed(2)}
