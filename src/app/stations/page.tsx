@@ -48,15 +48,29 @@ function StationsContent() {
 
   useEffect(() => {
     getCurrentLocation()
-      .then(loc => setUserLocation(loc))
-      .catch(err => console.error("Erro loc:", err))
+      .then(loc => {
+        console.log("Localização obtida:", loc)
+        setUserLocation(loc)
+      })
+      .catch(err => {
+        console.error("Erro ao obter localização:", err)
+        toast({
+          title: "Erro de Localização",
+          description: "Não conseguimos acessar sua localização exata.",
+          variant: "destructive"
+        })
+      })
 
-    const q = query(collection(db, "stations"), where("status", "==", "ativo"))
+    const q = query(collection(db, "stations"))
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const stationsList = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Station[]
+      const stationsList = snapshot.docs.map(doc => {
+        const data = doc.data();
+        console.log("Dados do posto no Firestore:", doc.id, data);
+        return {
+          id: doc.id,
+          ...data
+        }
+      }) as Station[]
       setStations(stationsList)
       setLoading(false)
     })
@@ -79,27 +93,36 @@ function StationsContent() {
   const stationsWithDistance = useMemo(() => {
     return stations.map(s => {
       let dist = 999
-      if (userLocation) {
+      // Pegando latitude e longitude independente do nome do campo (lat/lng ou latitude/longitude)
+      const sLat = Number(s.latitude || (s as any).lat)
+      const sLng = Number(s.longitude || (s as any).lng)
+
+      if (userLocation && !isNaN(sLat) && !isNaN(sLng)) {
         dist = calculateDistance(
           userLocation.latitude,
           userLocation.longitude,
-          Number(s.latitude),
-          Number(s.longitude)
+          sLat,
+          sLng
         )
       }
-      return { ...s, dist }
+      return { ...s, dist, sLat, sLng }
     })
   }, [stations, userLocation])
 
   const filteredAndSortedStations = useMemo(() => {
     return stationsWithDistance
-      .filter(s => s.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      .filter(s => {
+        const matchesSearch = s.name.toLowerCase().includes(searchTerm.toLowerCase())
+        // Removendo filtro de "ativo" por enquanto para debug, ou garantindo que aceita postos sem esse campo
+        const isVisible = (s.status === "ativo" || (s as any).status === undefined || (s as any).status === "")
+        return matchesSearch && isVisible
+      })
       .sort((a, b) => {
         if (sortBy === "distance") return a.dist - b.dist
         if (sortBy === "price") {
-          const priceA = (a.prices as any)?.[selectedFuel]?.app || 999
-          const priceB = (b.prices as any)?.[selectedFuel]?.app || 999
-          return priceA - priceB
+          const priceA = (a.prices as any)?.[selectedFuel]?.app || (a.prices as any)?.[selectedFuel]?.discount || 999
+          const priceB = (b.prices as any)?.[selectedFuel]?.app || (b.prices as any)?.[selectedFuel]?.discount || 999
+          return Number(priceA) - Number(priceB)
         }
         return 0
       })
@@ -111,9 +134,9 @@ function StationsContent() {
 
   const handleOpenMaps = () => {
     if (selectedStation) {
-      const lat = selectedStation.latitude
-      const lng = selectedStation.longitude
-      window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, "_blank");
+      const sLat = selectedStation.latitude || (selectedStation as any).lat
+      const sLng = selectedStation.longitude || (selectedStation as any).lng
+      window.open(`https://www.google.com/maps/dir/?api=1&destination=${sLat},${sLng}`, "_blank");
     }
   }
 
@@ -222,6 +245,11 @@ function StationsContent() {
                 const priceData = (selectedStation.prices as any)?.[f];
                 if (!priceData) return null;
 
+                const pumpPrice = priceData.pump || priceData.normal;
+                const appPrice = priceData.app || priceData.discount;
+
+                if (!pumpPrice && !appPrice) return null;
+
                 return (
                   <Card key={f} className="border-none shadow-md bg-white overflow-hidden">
                     <CardContent className="p-4 flex items-center justify-between">
@@ -231,12 +259,12 @@ function StationsContent() {
                         </div>
                         <div>
                           <p className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">Bomba</p>
-                          <p className="text-sm font-bold text-slate-400 line-through">R$ {priceData.pump?.toFixed(2)}</p>
+                          <p className="text-sm font-bold text-slate-400 line-through">R$ {Number(pumpPrice)?.toFixed(2)}</p>
                         </div>
                       </div>
                       <div className="text-right">
                         <p className="text-[8px] font-bold text-primary uppercase tracking-widest">No App</p>
-                        <p className="text-xl font-bold text-primary">R$ {priceData.app?.toFixed(2)}</p>
+                        <p className="text-xl font-bold text-primary">R$ {Number(appPrice)?.toFixed(2)}</p>
                       </div>
                     </CardContent>
                   </Card>
