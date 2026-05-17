@@ -18,6 +18,7 @@ import {
   Star, 
   ArrowUpDown, 
   ChevronLeft, 
+  ChevronRight,
   Clock, 
   Zap,
   QrCode,
