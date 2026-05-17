@@ -18,7 +18,8 @@ import {
   ArrowLeft,
   ChevronRight,
   Filter,
-  Download
+  Download,
+  Clock
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
@@ -62,9 +63,6 @@ export default function AdminPostoPage() {
             </Link>
             <Button variant="default" className="flex-1 md:flex-none bg-slate-900 text-white shadow-xl rounded-2xl h-12 px-6 font-bold">
               <Download className="w-4 h-4 mr-2" /> EXPORTAR
-            </Button>
-            <Button variant="ghost" size="icon" className="bg-white shadow-sm border border-slate-100 rounded-2xl h-12 w-12">
-              <Settings className="w-5 h-5 text-slate-400" />
             </Button>
           </div>
         </header>
@@ -170,22 +168,22 @@ export default function AdminPostoPage() {
               <CardContent className="p-10 space-y-6">
                  <div className="flex items-center gap-4">
                    <div className="p-3 bg-primary/20 rounded-2xl">
-                     <ArrowUpRight className="w-7 h-7 text-primary" />
+                     <Clock className="w-7 h-7 text-primary" />
                    </div>
-                   <h3 className="font-bold text-lg uppercase tracking-[0.2em]">Insights IA</h3>
+                   <h3 className="font-bold text-lg uppercase tracking-[0.2em]">Meta Diária</h3>
                  </div>
                  <p className="text-sm text-slate-400 leading-relaxed">
-                   O fluxo de clientes deve aumentar **15%** no próximo final de semana devido ao feriado. Sugerimos ativar a campanha de "Cashback em Dobro" agora.
+                   Você atingiu **85%** da meta de vendas via aplicativo hoje. Faltam apenas 5 abastecimentos para o bônus de performance.
                  </p>
                  <Button className="w-full bg-primary text-white font-bold h-14 rounded-2xl mt-4 shadow-xl shadow-primary/20 hover:scale-[1.02] transition-all">
-                   CONFIGURAR CAMPANHA
+                   VER DETALHES DA META
                  </Button>
               </CardContent>
             </Card>
           </div>
         </div>
 
-        {/* Lista de Vendas Recentes (Tabela amigável em Desktop) */}
+        {/* Lista de Vendas Recentes */}
         <Card className="border-none shadow-xl bg-white rounded-[2.5rem] overflow-hidden">
           <CardHeader className="p-10 pb-6 border-b border-slate-50">
             <div className="flex justify-between items-center">

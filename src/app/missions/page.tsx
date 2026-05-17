@@ -1,6 +1,7 @@
+
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Navigation } from "@/components/Navigation"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -9,7 +10,6 @@ import { Badge } from "@/components/ui/badge"
 import { Target, Zap, Clock, Trophy, ShieldCheck } from "lucide-react"
 
 export default function MissionsPage() {
-  // Substituído o carregamento de IA por uma missão estática pré-definida
   const [mission] = useState({
     missionName: "Guerreiro do Fim de Semana",
     description: "Abasteça pelo menos 40 litros entre sexta-feira e domingo para garantir um bônus de cashback de 5%.",
@@ -17,7 +17,6 @@ export default function MissionsPage() {
     goalValue: 40,
     rewardPoints: 500,
     expirationDate: "2024-12-31",
-    psychologicalBiasApplied: ["Fidelidade"],
     currentProgressText: "Você já abasteceu 26 litros este final de semana!"
   })
 
