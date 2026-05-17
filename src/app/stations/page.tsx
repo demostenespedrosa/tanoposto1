@@ -503,11 +503,6 @@ function StationsContent() {
 
       <Navigation />
     </main>
-
-      </div>
-
-      <Navigation />
-    </main>
   )
 }
 
