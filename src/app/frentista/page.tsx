@@ -21,8 +21,6 @@ import {
 import Link from "next/link"
 import { useAuth } from "@/hooks/useAuth"
 import { useRouter } from "next/navigation"
-
-const FRENTISTAS = [
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
