@@ -1,7 +1,7 @@
 
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Navigation } from "@/components/Navigation"
 import { ProtectedRoute } from "@/components/ProtectedRoute"
 import { Card, CardContent } from "@/components/ui/card"
@@ -237,22 +237,6 @@ function ClientContent() {
         </section>
 
       </div>
-      <Navigation />
-    </main>
-  )
-}
-
-                <div className="p-4 text-center w-56 text-xs text-muted-foreground italic">
-                  Nenhum posto ativo encontrado.
-                </div>
-              )}
-            </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
-        </div>
-
-      </div>
-
       <Navigation />
     </main>
   )

@@ -11,7 +11,6 @@ import { toast } from "@/hooks/use-toast"
 import { db } from "@/lib/firebase"
 import { collection, onSnapshot, query, where, orderBy } from "firebase/firestore"
 import { useAuth } from "@/hooks/useAuth"
-import Navigation from "@/components/Navigation"
 
 export default function CouponsPage() {
   const { user } = useAuth()
