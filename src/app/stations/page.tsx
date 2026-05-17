@@ -28,7 +28,7 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
 import { db } from "@/lib/firebase"
-import { collection, onSnapshot, query, where } from "firebase/firestore"
+import { collection, onSnapshot, query, where, orderBy } from "firebase/firestore"
 import { calculateDistance, getCurrentLocation, type Station } from "@/hooks/useStations"
 
 function StationsContent() {
