@@ -183,20 +183,3 @@ export default function CouponsPage() {
   )
 }
 
-          <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
-            <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
-              <Gift className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h3 className="font-headline font-bold text-xl">Mais Vantagens?</h3>
-              <p className="text-white/80 text-xs">Indique seus amigos e ganhe cupons exclusivos toda semana!</p>
-            </div>
-            <Button className="w-full bg-white text-primary font-bold hover:bg-white/90">INDICAR AMIGOS</Button>
-          </CardContent>
-        </Card>
-
-      </div>
-      <Navigation />
-    </main>
-  )
-}
