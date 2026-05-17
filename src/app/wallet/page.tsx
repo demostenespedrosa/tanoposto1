@@ -203,31 +203,3 @@ export default function WalletPage() {
   )
 }
 
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Bloco Informativo para Colaboradores */}
-      <Card className="bg-slate-900 border-none shadow-xl text-white overflow-hidden">
-        <CardContent className="p-6 flex gap-4">
-          <div className="bg-primary/20 p-3 rounded-2xl h-fit">
-            <Info className="w-6 h-6 text-primary" />
-          </div>
-          <div className="space-y-2">
-            <h3 className="font-bold text-sm">Sua empresa no Tá no Posto</h3>
-            <p className="text-[11px] text-slate-400 leading-relaxed">
-              O seu saldo de <strong>Vale Combustível</strong> é recarregado automaticamente pela sua empresa. Use-o para abastecer com desconto em qualquer posto parceiro e economize ainda mais!
-            </p>
-            <Button variant="link" className="text-primary text-[10px] p-0 font-bold h-auto">SAIBA COMO FUNCIONA</Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Navigation />
-    </main>
-  )
-}

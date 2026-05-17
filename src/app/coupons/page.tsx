@@ -182,22 +182,7 @@ export default function CouponsPage() {
     </main>
   )
 }
-            </CardContent>
-          </Card>
-        )}
 
-        <div className="space-y-4">
-          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">Promocionais</h2>
-          {activeCoupons.map((coupon) => (
-            <Card key={coupon.id} className="border-none shadow-md overflow-hidden bg-white relative">
-              <div className="absolute top-0 left-0 bottom-0 w-2 bg-primary" />
-              <CardContent className="p-5 flex gap-4">
-                <div className="flex-1 space-y-3">
-                  <div className="flex justify-between items-start">
-                    <Badge variant="secondary" className="bg-primary/5 text-primary text-[8px] font-bold uppercase tracking-widest">{coupon.type}</Badge>
-                    <div className="flex items-center gap-1 text-[10px] text-muted-foreground font-medium">
-                      <Clock className="w-3 h-3 text-orange-400" /> {coupon.expiry}
-                    </div>
                   </div>
                   <div>
                     <h3 className="font-bold text-slate-800 text-lg">{coupon.title}</h3>

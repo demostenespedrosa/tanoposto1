@@ -241,13 +241,7 @@ function ClientContent() {
     </main>
   )
 }
-                <TrendingDown className="w-5 h-5 text-primary" />
-              </div>
-              <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Já economizei</p>
-              <p className="text-xl font-headline font-bold text-slate-800">R$ 1.240,50</p>
-            </CardContent>
-          </Card>
-          <Card className="border-none shadow-md bg-white overflow-hidden relative group">
+
              <div className="absolute top-0 right-0 p-2 opacity-5">
               <Star className="w-12 h-12 text-yellow-500" />
             </div>

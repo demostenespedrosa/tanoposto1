@@ -126,8 +126,3 @@ export default function ProfilePage() {
   )
 }
 
-      </div>
-      <Navigation />
-    </main>
-  )
-}
