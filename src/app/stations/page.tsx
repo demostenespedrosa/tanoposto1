@@ -375,47 +375,6 @@ function StationsContent() {
       </main>
     )
   }
-              </div>
-
-              <div className="bg-slate-50 p-4 rounded-2xl border border-dashed border-slate-200 space-y-3">
-                <div className="flex items-center gap-3 text-xs text-slate-600">
-                  <ShieldCheck className="w-4 h-4 text-green-500" />
-                  <span>Desconto garantido pela plataforma</span>
-                </div>
-                <div className="flex items-center gap-3 text-xs text-slate-600">
-                  <Clock className="w-4 h-4 text-orange-400" />
-                  <span>O código expira em 15 minutos</span>
-                </div>
-              </div>
-
-              <Button 
-                onClick={handleGenerateToken}
-                className="w-full h-14 bg-slate-900 text-white font-bold rounded-2xl shadow-lg hover:bg-black transition-all text-sm tracking-widest uppercase"
-              >
-                GERAR CÓDIGO AGORA
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-
-        <div className="fixed bottom-24 left-0 right-0 px-4 flex gap-3 max-w-lg mx-auto z-40">
-          <Button 
-            onClick={handleOpenMaps}
-            variant="outline"
-            className="flex-1 h-14 rounded-2xl bg-white/90 backdrop-blur-md border-slate-200 font-bold text-slate-800 shadow-lg hover:bg-white"
-          >
-            <NavIcon className="w-5 h-5 mr-1" /> COMO CHEGAR
-          </Button>
-          <Button 
-            onClick={() => setIsFuelingDialogOpen(true)}
-            className="flex-1 h-14 rounded-2xl bg-primary text-white font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform"
-          >
-            <Fuel className="w-5 h-5 mr-1" /> ABASTECER
-          </Button>
-        </div>
-      </main>
-    )
-  }
 
   return (
     <main className="min-h-screen pb-32 bg-slate-50 text-slate-900 animate-in fade-in duration-300">
