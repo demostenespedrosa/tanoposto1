@@ -105,12 +105,18 @@ function SaaSAdminContent() {
           <SidebarFooter className="p-4">
             <SidebarMenu>
               <SidebarMenuItem>
-                <Link href="/" className="w-full">
-                  <SidebarMenuButton className="h-12 rounded-xl font-bold text-slate-500 hover:bg-red-50 hover:text-red-600 px-4">
+                <SidebarMenuButton 
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                  className="h-12 rounded-xl font-bold text-slate-500 hover:bg-red-50 hover:text-red-600 px-4"
+                >
+                  {isLoggingOut ? (
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  ) : (
                     <LogOut className="w-5 h-5 mr-2" />
-                    <span className="group-data-[collapsible=icon]:hidden uppercase text-[11px] tracking-wider">Sair do Master</span>
-                  </SidebarMenuButton>
-                </Link>
+                  )}
+                  <span className="group-data-[collapsible=icon]:hidden uppercase text-[11px] tracking-wider">Sair do Master</span>
+                </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarFooter>

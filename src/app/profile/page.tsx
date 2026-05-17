@@ -5,11 +5,30 @@ import { Navigation } from "@/components/Navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { User, Settings, Bell, Shield, LogOut, ChevronRight, CreditCard, History, HelpCircle, Store, UserCheck, Building2 } from "lucide-react"
+import { User, Settings, Bell, Shield, LogOut, ChevronRight, CreditCard, History, HelpCircle, Store, UserCheck, Building2, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { useAuth } from "@/hooks/useAuth"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function ProfilePage() {
+  const { logout } = useAuth()
+  const router = useRouter()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true)
+      await logout()
+      router.push('/login')
+    } catch (error) {
+      console.error('Logout error:', error)
+    } finally {
+      setIsLoggingOut(false)
+    }
+  }
+
   const menuItems = [
     { icon: History, label: "Histórico de Abastecimento", color: "text-blue-500", href: "#" },
     { icon: CreditCard, label: "Métodos de Pagamento", color: "text-green-500", href: "#" },
@@ -75,9 +94,16 @@ export default function ProfilePage() {
         {/* Logout */}
         <Button 
           variant="ghost" 
+          onClick={handleLogout}
+          disabled={isLoggingOut}
           className="w-full h-14 rounded-2xl text-destructive hover:text-destructive hover:bg-destructive/5 font-bold flex items-center justify-center gap-2"
         >
-          <LogOut className="w-5 h-5" /> SAIR DA CONTA
+          {isLoggingOut ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            <LogOut className="w-5 h-5" />
+          )}
+          SAIR DA CONTA
         </Button>
 
         <div className="text-center">

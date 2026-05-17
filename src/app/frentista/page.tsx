@@ -15,9 +15,14 @@ import {
   LogOut,
   User,
   History,
-  LayoutDashboard
+  LayoutDashboard,
+  Loader2
 } from "lucide-react"
 import Link from "next/link"
+import { useAuth } from "@/hooks/useAuth"
+import { useRouter } from "next/navigation"
+
+const FRENTISTAS = [
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
@@ -29,6 +34,22 @@ const FRENTISTAS = [
 ]
 
 function FrentistaContent() {
+  const { logout } = useAuth()
+  const router = useRouter()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true)
+      await logout()
+      router.push('/login')
+    } catch (error) {
+      console.error('Logout error:', error)
+    } finally {
+      setIsLoggingOut(false)
+    }
+  }
+
   const [selectedAttendant, setSelectedAttendant] = useState<any>(null)
   const [validatingCode, setValidatingCode] = useState("")
   const [fuelAmount, setFuelAmount] = useState("")
@@ -121,10 +142,24 @@ function FrentistaContent() {
             <Button 
               variant="ghost" 
               size="sm" 
-              onClick={handleSwitchAttendant}
-              className="text-slate-500 font-bold text-[10px] hover:bg-slate-100 rounded-lg h-8 px-3"
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="text-red-500 font-bold text-[10px] hover:bg-red-50 rounded-lg h-8 px-3"
             >
-              TROCAR <LogOut className="w-3 h-3 ml-2" />
+              {isLoggingOut ? (
+                <Loader2 className="w-3 h-3 animate-spin mr-2" />
+              ) : (
+                <LogOut className="w-3 h-3 mr-2" />
+              )}
+              SAIR DO SISTEMA
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleSwitchAttendant}
+              className="text-slate-500 font-bold text-[10px] hover:bg-slate-100 rounded-lg h-8 px-3 ml-2"
+            >
+              TROCAR OPERADOR
             </Button>
           </header>
 
