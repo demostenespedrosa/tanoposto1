@@ -76,11 +76,12 @@ function SaaSAdminContent() {
   } satisfies ChartConfig
 
   const navItems = [
-    { id: "dashboard", label: "Dashboard Global", icon: LayoutDashboard },
-    { id: "postos", label: "Postos Parceiros", icon: Store },
-    { id: "empresas", label: "Contas Corporativas", icon: Building2 },
-    { id: "usuarios", label: "Base de Usuários", icon: Users },
-    { id: "config", label: "Configurações", icon: Settings },
+    { id: "dashboard", label: "Dashboard Global", icon: LayoutDashboard, href: "/admin" },
+    { id: "postos", label: "Postos Parceiros", icon: Store, href: "/admin/stations" },
+    { id: "combustiveis", label: "Combustíveis", icon: Fuel, href: "/admin/fuels" },
+    { id: "empresas", label: "Contas Corporativas", icon: Building2, href: "#" },
+    { id: "usuarios", label: "Base de Usuários", icon: Users, href: "#" },
+    { id: "config", label: "Configurações", icon: Settings, href: "#" },
   ]
 
   return (
@@ -103,19 +104,20 @@ function SaaSAdminContent() {
             <SidebarMenu className="gap-2">
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.id}>
-                  <SidebarMenuButton 
-                    isActive={activeView === item.id}
-                    onClick={() => setActiveView(item.id)}
-                    className={cn(
-                      "h-12 rounded-xl transition-all font-bold px-4",
-                      activeView === item.id 
-                        ? "bg-slate-900 text-white hover:bg-slate-800 hover:text-white" 
-                        : "text-slate-500 hover:bg-slate-100"
-                    )}
-                  >
-                    <item.icon className="w-5 h-5 mr-2" />
-                    <span className="group-data-[collapsible=icon]:hidden uppercase text-[11px] tracking-wider">{item.label}</span>
-                  </SidebarMenuButton>
+                  <Link href={item.href} className="w-full">
+                    <SidebarMenuButton 
+                      isActive={activeView === item.id}
+                      className={cn(
+                        "h-12 rounded-xl transition-all font-bold px-4 w-full",
+                        activeView === item.id 
+                          ? "bg-slate-900 text-white hover:bg-slate-800 hover:text-white" 
+                          : "text-slate-500 hover:bg-slate-100"
+                      )}
+                    >
+                      <item.icon className="w-5 h-5 mr-2" />
+                      <span className="group-data-[collapsible=icon]:hidden uppercase text-[11px] tracking-wider">{item.label}</span>
+                    </SidebarMenuButton>
+                  </Link>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
