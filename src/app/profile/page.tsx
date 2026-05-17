@@ -5,17 +5,18 @@ import { Navigation } from "@/components/Navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { User, Settings, Bell, Shield, LogOut, ChevronRight, CreditCard, History, HelpCircle } from "lucide-react"
+import { User, Settings, Bell, Shield, LogOut, ChevronRight, CreditCard, History, HelpCircle, Store, UserCheck } from "lucide-react"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 export default function ProfilePage() {
   const menuItems = [
-    { icon: History, label: "Histórico de Abastecimento", color: "text-blue-500" },
-    { icon: CreditCard, label: "Métodos de Pagamento", color: "text-green-500" },
-    { icon: Bell, label: "Notificações", color: "text-orange-500" },
-    { icon: Shield, label: "Segurança e Privacidade", color: "text-purple-500" },
-    { icon: HelpCircle, label: "Ajuda e Suporte", color: "text-slate-500" },
-    { icon: Settings, label: "Configurações", color: "text-slate-500" },
+    { icon: History, label: "Histórico de Abastecimento", color: "text-blue-500", href: "#" },
+    { icon: CreditCard, label: "Métodos de Pagamento", color: "text-green-500", href: "#" },
+    { icon: Bell, label: "Notificações", color: "text-orange-500", href: "#" },
+    { icon: Store, label: "Gestão do Posto (Dono)", color: "text-purple-500", href: "/admin-posto" },
+    { icon: UserCheck, label: "Operação Frentista", color: "text-slate-700", href: "/frentista" },
+    { icon: Settings, label: "Configurações", color: "text-slate-500", href: "#" },
   ]
 
   return (
@@ -54,9 +55,10 @@ export default function ProfilePage() {
         {/* Menu de Opções */}
         <div className="space-y-2">
           {menuItems.map((item, i) => (
-            <button 
+            <Link 
               key={i} 
-              className="w-full bg-white p-4 rounded-2xl shadow-sm border border-slate-50 flex items-center justify-between transition-colors hover:bg-slate-50 active:scale-[0.98]"
+              href={item.href}
+              className="w-full bg-white p-4 rounded-2xl shadow-sm border border-slate-50 flex items-center justify-between transition-colors hover:bg-slate-50 active:scale-[0.98] group"
             >
               <div className="flex items-center gap-4">
                 <div className={cn("p-2 bg-slate-50 rounded-xl", item.color)}>
@@ -64,8 +66,8 @@ export default function ProfilePage() {
                 </div>
                 <span className="text-sm font-bold text-slate-700">{item.label}</span>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-300" />
-            </button>
+              <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-primary transition-colors" />
+            </Link>
           ))}
         </div>
 
