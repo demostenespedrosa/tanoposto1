@@ -22,7 +22,7 @@ import {
   Clock
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts"
 import Link from "next/link"
 
@@ -36,6 +36,13 @@ export default function AdminPostoPage() {
     { name: "Sab", vendas: 2390 },
     { name: "Dom", vendas: 3490 },
   ]
+
+  const chartConfig = {
+    vendas: {
+      label: "Vendas",
+      color: "hsl(var(--primary))",
+    },
+  } satisfies ChartConfig
 
   return (
     <main className="min-h-screen bg-slate-50 pb-20 pt-8 px-4 md:px-12">
@@ -74,24 +81,27 @@ export default function AdminPostoPage() {
             { label: "Faturamento Bruto", val: "R$ 12.4k", trend: "REPASSE OK", icon: Wallet, color: "blue-500" },
             { label: "Recorrência", val: "78%", trend: "ALTA", icon: Users, color: "purple-500" },
             { label: "Ticket Médio", val: "R$ 185", trend: "ESTÁVEL", icon: DollarSign, color: "orange-500" },
-          ].map((kpi, i) => (
-            <Card key={i} className="border-none shadow-lg bg-white overflow-hidden transition-all hover:scale-[1.03]">
-              <CardContent className="p-7 space-y-4">
-                <div className="flex justify-between items-center">
-                  <div className={cn("p-2 rounded-xl bg-opacity-10", `bg-${kpi.color}`, `text-${kpi.color}`)}>
-                    <kpi.icon className="w-6 h-6" />
+          ].map((kpi, i) => {
+            const Icon = kpi.icon
+            return (
+              <Card key={i} className="border-none shadow-lg bg-white overflow-hidden transition-all hover:scale-[1.03]">
+                <CardContent className="p-7 space-y-4">
+                  <div className="flex justify-between items-center">
+                    <div className={cn("p-2 rounded-xl bg-opacity-10", kpi.color === "primary" ? "bg-primary text-primary" : `bg-${kpi.color} text-${kpi.color}`)}>
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <Badge variant="outline" className={cn("text-[10px] h-6 px-3 border-none font-bold uppercase tracking-widest", i === 0 ? "bg-green-50 text-primary" : "bg-slate-50 text-slate-500")}>
+                      {kpi.trend}
+                    </Badge>
                   </div>
-                  <Badge variant="outline" className={cn("text-[10px] h-6 px-3 border-none font-bold uppercase tracking-widest", i === 0 ? "bg-green-50 text-primary" : "bg-slate-50 text-slate-500")}>
-                    {kpi.trend}
-                  </Badge>
-                </div>
-                <div>
-                  <p className="text-4xl font-headline font-bold text-slate-800 tracking-tight">{kpi.val}</p>
-                  <p className="text-xs uppercase tracking-[0.2em] font-bold text-slate-400 mt-1">{kpi.label}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  <div>
+                    <p className="text-4xl font-headline font-bold text-slate-800 tracking-tight">{kpi.val}</p>
+                    <p className="text-xs uppercase tracking-[0.2em] font-bold text-slate-400 mt-1">{kpi.label}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            )
+          })}
         </div>
 
         {/* Área Analítica */}
@@ -110,35 +120,33 @@ export default function AdminPostoPage() {
               </div>
             </CardHeader>
             <CardContent className="p-10">
-              <div className="h-[350px] w-full mt-6">
-                 <ResponsiveContainer width="100%" height="100%">
-                   <BarChart data={chartData}>
-                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                     <XAxis 
-                        dataKey="name" 
-                        axisLine={false} 
-                        tickLine={false} 
-                        tick={{ fontSize: 14, fontWeight: 'bold', fill: '#94a3b8' }} 
-                        dy={10}
-                     />
-                     <YAxis 
-                        axisLine={false} 
-                        tickLine={false} 
-                        tick={{ fontSize: 12, fontWeight: 'bold', fill: '#94a3b8' }} 
-                     />
-                     <Tooltip 
-                        content={<ChartTooltipContent />}
-                        cursor={{ fill: '#f8fafc' }}
-                     />
-                     <Bar 
-                        dataKey="vendas" 
-                        fill="hsl(var(--primary))" 
-                        radius={[10, 10, 0, 0]} 
-                        barSize={40}
-                     />
-                   </BarChart>
-                 </ResponsiveContainer>
-              </div>
+              <ChartContainer config={chartConfig} className="h-[350px] w-full mt-6">
+                 <BarChart data={chartData}>
+                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                   <XAxis 
+                      dataKey="name" 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fontSize: 14, fontWeight: 'bold', fill: '#94a3b8' }} 
+                      dy={10}
+                   />
+                   <YAxis 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fontSize: 12, fontWeight: 'bold', fill: '#94a3b8' }} 
+                   />
+                   <ChartTooltip 
+                      content={<ChartTooltipContent />}
+                      cursor={{ fill: '#f8fafc' }}
+                   />
+                   <Bar 
+                      dataKey="vendas" 
+                      fill="var(--color-vendas)" 
+                      radius={[10, 10, 0, 0]} 
+                      barSize={40}
+                   />
+                 </BarChart>
+              </ChartContainer>
             </CardContent>
           </Card>
 
