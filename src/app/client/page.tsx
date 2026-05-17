@@ -2,6 +2,7 @@
 "use client"
 
 import { Navigation } from "@/components/Navigation"
+import { ProtectedRoute } from "@/components/ProtectedRoute"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
@@ -11,7 +12,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 
-export default function Home() {
+function ClientContent() {
   const banners = [
     { id: 1, img: "https://picsum.photos/seed/promo1/800/400", title: "Cashback em Dobro!", desc: "Abasteça hoje e ganhe 10%" },
     { id: 2, img: "https://picsum.photos/seed/promo2/800/400", title: "Benefício Corporativo", desc: "Sua empresa agora recarrega seu Vale aqui" },
@@ -155,5 +156,13 @@ export default function Home() {
 
       <Navigation />
     </main>
+  )
+}
+
+export default function Home() {
+  return (
+    <ProtectedRoute allowedRoles={['cliente']}>
+      <ClientContent />
+    </ProtectedRoute>
   )
 }

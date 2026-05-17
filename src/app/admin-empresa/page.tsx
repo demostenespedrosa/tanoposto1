@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { ProtectedRoute } from "@/components/ProtectedRoute"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -40,7 +41,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-export default function AdminEmpresaPage() {
+function AdminEmpresaContent() {
   const [activeView, setActiveView] = useState("visao-geral")
 
   const chartData = [
@@ -403,5 +404,13 @@ export default function AdminEmpresaPage() {
         </SidebarInset>
       </div>
     </SidebarProvider>
+  )
+}
+
+export default function AdminEmpresaPage() {
+  return (
+    <ProtectedRoute allowedRoles={['admin-empresa']}>
+      <AdminEmpresaContent />
+    </ProtectedRoute>
   )
 }

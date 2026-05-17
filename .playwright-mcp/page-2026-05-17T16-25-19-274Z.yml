@@ -1,0 +1,55 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - img [ref=e7]
+        - heading "Tá no Posto" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Crie sua conta para começar
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - generic [ref=e14]: Criar Conta
+          - generic [ref=e15]: Preencha os dados abaixo
+        - generic [ref=e16]:
+          - generic [ref=e17]:
+            - generic [ref=e18]:
+              - text: Nome
+              - textbox "Nome" [disabled] [ref=e19]:
+                - /placeholder: Seu nome
+                - text: João Silva
+            - generic [ref=e20]:
+              - text: Email
+              - textbox "Email" [disabled] [ref=e21]:
+                - /placeholder: seu@email.com
+                - text: joao@test.com
+            - generic [ref=e22]:
+              - text: Tipo de Usuário
+              - combobox [ref=e23] [cursor=pointer]:
+                - generic: Cliente (Motorista)
+                - img [ref=e24]
+              - combobox [ref=e37]
+            - generic [ref=e27]:
+              - text: Senha
+              - textbox "Senha" [disabled] [ref=e28]:
+                - /placeholder: ••••••••
+                - text: senha123
+            - generic [ref=e29]:
+              - text: Confirmar Senha
+              - textbox "Confirmar Senha" [disabled] [ref=e30]:
+                - /placeholder: ••••••••
+                - text: senha123
+            - button "Criando..." [disabled]:
+              - img
+              - text: Criando...
+          - paragraph [ref=e32]:
+            - text: Já tem uma conta?
+            - link "Fazer login" [ref=e33] [cursor=pointer]:
+              - /url: /login
+      - link "Voltar para login" [ref=e34] [cursor=pointer]:
+        - /url: /login
+        - img [ref=e35]
+        - text: Voltar para login
+  - region "Notifications (F8)":
+    - list
+  - button "Open Next.js Dev Tools" [ref=e43] [cursor=pointer]:
+    - img [ref=e44]
+  - alert [ref=e47]

@@ -2,15 +2,16 @@
 "use client"
 
 import { useState } from "react"
+import { ProtectedRoute } from "@/components/ProtectedRoute"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { 
-  CheckCircle2, 
-  Fuel, 
-  ArrowLeft, 
-  Info, 
+import {
+  CheckCircle2,
+  Fuel,
+  ArrowLeft,
+  Info,
   LogOut,
   User,
   History,
@@ -27,7 +28,7 @@ const FRENTISTAS = [
   { id: 4, name: "Marcos", initials: "MC", color: "bg-green-500" },
 ]
 
-export default function FrentistaPage() {
+function FrentistaContent() {
   const [selectedAttendant, setSelectedAttendant] = useState<any>(null)
   const [validatingCode, setValidatingCode] = useState("")
   const [fuelAmount, setFuelAmount] = useState("")
@@ -257,5 +258,13 @@ export default function FrentistaPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function FrentistaPage() {
+  return (
+    <ProtectedRoute allowedRoles={['frentista']}>
+      <FrentistaContent />
+    </ProtectedRoute>
   )
 }

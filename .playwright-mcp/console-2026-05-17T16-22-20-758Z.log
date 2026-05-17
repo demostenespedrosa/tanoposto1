@@ -1,0 +1,25 @@
+[    5232ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:9002/login:0
+[    5863ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:14537
+[   10160ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5949
+[   10658ms] [LOG] [Fast Refresh] done in 600ms @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5809
+[   11682ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5949
+[   12345ms] [LOG] [Fast Refresh] done in 795ms @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5809
+[   12734ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5949
+[   12844ms] [LOG] [Fast Refresh] done in 231ms @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5809
+[   32462ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5949
+[   33007ms] [LOG] [Fast Refresh] done in 646ms @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5809
+[   50361ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC20oFgAIqMIoh4qB1NskMJVHnTSywE6go:0
+[   50372ms] [ERROR] Login error: FirebaseError: Firebase: Error (auth/invalid-credential).
+    at createErrorInternal (http://localhost:9002/_next/static/chunks/94568_%40firebase_auth_dist_esm2017_39867e80._.js:661:41)
+    at _fail (http://localhost:9002/_next/static/chunks/94568_%40firebase_auth_dist_esm2017_39867e80._.js:620:11)
+    at _performFetchWithErrorHandling (http://localhost:9002/_next/static/chunks/94568_%40firebase_auth_dist_esm2017_39867e80._.js:1091:17)
+    at async _performSignInRequest (http://localhost:9002/_next/static/chunks/94568_%40firebase_auth_dist_esm2017_39867e80._.js:1108:28)
+    at async _signInWithCredential (http://localhost:9002/_next/static/chunks/94568_%40firebase_auth_dist_esm2017_39867e80._.js:5649:22)
+    at async login (http://localhost:9002/_next/static/chunks/src_5eb1be5f._.js:112:24)
+    at async handleEmailLogin (http://localhost:9002/_next/static/chunks/_37a26d14._.js:341:13) @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_b0daae9a._.js:2359
+[   50722ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5949
+[   52289ms] [LOG] [Fast Refresh] done in 1675ms @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5809
+[   64953ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5949
+[   65105ms] [LOG] [Fast Refresh] done in 255ms @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5809
+[   65955ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5949
+[   66548ms] [LOG] [Fast Refresh] done in 694ms @ http://localhost:9002/_next/static/chunks/node_modules_next_dist_client_cf1d9188._.js:5809

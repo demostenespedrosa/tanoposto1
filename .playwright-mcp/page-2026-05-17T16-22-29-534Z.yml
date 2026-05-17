@@ -1,0 +1,33 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - img [ref=e7]
+        - heading "Tá no Posto" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Faça login para acessar sua conta
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - generic [ref=e14]: Login
+          - generic [ref=e15]: Digite suas credenciais para continuar
+        - generic [ref=e16]:
+          - generic [ref=e17]:
+            - generic [ref=e18]:
+              - text: Email
+              - textbox "Email" [ref=e19]:
+                - /placeholder: seu@email.com
+            - generic [ref=e20]:
+              - text: Senha
+              - textbox "Senha" [ref=e21]:
+                - /placeholder: ••••••••
+            - button "Entrar" [ref=e22] [cursor=pointer]
+          - generic [ref=e27]: OU
+          - button "Entrar com Google" [ref=e28] [cursor=pointer]:
+            - img
+            - text: Entrar com Google
+          - paragraph [ref=e29]:
+            - text: Não tem uma conta?
+            - link "Criar conta" [ref=e30] [cursor=pointer]:
+              - /url: /login/signup
+      - paragraph [ref=e31]: Protótipo Tá no Posto • Sistema de Fidelidade
+  - region "Notifications (F8)":
+    - list

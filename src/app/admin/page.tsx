@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { ProtectedRoute } from "@/components/ProtectedRoute"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -39,7 +40,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-export default function SaaSAdminPage() {
+function SaaSAdminContent() {
   const [activeView, setActiveView] = useState("dashboard")
 
   const chartData = [
@@ -294,5 +295,13 @@ export default function SaaSAdminPage() {
         </SidebarInset>
       </div>
     </SidebarProvider>
+  )
+}
+
+export default function SaaSAdminPage() {
+  return (
+    <ProtectedRoute allowedRoles={['master-admin']}>
+      <SaaSAdminContent />
+    </ProtectedRoute>
   )
 }

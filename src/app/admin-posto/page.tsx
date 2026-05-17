@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { ProtectedRoute } from "@/components/ProtectedRoute"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -36,7 +37,7 @@ import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Line, LineChart } from "recharts"
 import Link from "next/link"
 
-export default function AdminPostoPage() {
+function AdminPostoContent() {
   const [activeTab, setActiveTab] = useState("visao-geral")
 
   const chartData = [
@@ -415,5 +416,13 @@ function Star(props: any) {
     >
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
     </svg>
+  )
+}
+
+export default function AdminPostoPage() {
+  return (
+    <ProtectedRoute allowedRoles={['admin-posto']}>
+      <AdminPostoContent />
+    </ProtectedRoute>
   )
 }
