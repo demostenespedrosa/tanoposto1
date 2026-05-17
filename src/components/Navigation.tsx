@@ -7,7 +7,7 @@ import { Home as HomeIcon, MapPin, Gift, User, Wallet } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navItems = [
-  { icon: HomeIcon, label: "Início", href: "/" },
+  { icon: HomeIcon, label: "Início", href: "/client" },
   { icon: MapPin, label: "Postos", href: "/stations" },
   { icon: Gift, label: "Cupons", href: "/coupons" },
   { icon: Wallet, label: "Carteira", href: "/wallet" },

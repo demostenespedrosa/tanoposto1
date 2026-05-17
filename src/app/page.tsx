@@ -1,160 +1,115 @@
+
 "use client"
 
-import { useEffect, useState } from "react"
-import { Navigation } from "@/components/Navigation"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
-import { Fuel, MapPin, Wallet, Gift, Bell, Search, Star, TrendingDown, Building2 } from "lucide-react"
-import Image from "next/image"
+import { Badge } from "@/components/ui/badge"
+import { 
+  Fuel, 
+  User, 
+  Store, 
+  Building2, 
+  ShieldCheck, 
+  ArrowRight
+} from "lucide-react"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 
-export default function Home() {
-  const banners = [
-    { id: 1, img: "https://picsum.photos/seed/promo1/800/400", title: "Cashback em Dobro!", desc: "Abasteça hoje e ganhe 10%" },
-    { id: 2, img: "https://picsum.photos/seed/promo2/800/400", title: "Benefício Corporativo", desc: "Sua empresa agora recarrega seu Vale aqui" },
-    { id: 3, img: "https://picsum.photos/seed/promo3/800/400", title: "Indique e Ganhe", desc: "Ganhe R$ 10 de saldo em cada indicação" },
-  ]
-
-  const nearbyStations = [
-    { id: 1, name: "Posto Shell - Centro", dist: "1.2 km", price: "R$ 5,79", logo: "https://picsum.photos/seed/shell/100/100" },
-    { id: 2, name: "Ipiranga - Av. Brasil", dist: "2.5 km", price: "R$ 5,85", logo: "https://picsum.photos/seed/ipiranga/100/100" },
-    { id: 3, name: "Petrobras - Lagoa", dist: "3.8 km", price: "R$ 5,75", logo: "https://picsum.photos/seed/br/100/100" },
+export default function LoginPage() {
+  const roles = [
+    {
+      title: "Área do Cliente",
+      description: "App mobile para motoristas buscarem postos e economizarem.",
+      icon: User,
+      href: "/client",
+      color: "bg-blue-500",
+      badge: "Mobile App"
+    },
+    {
+      title: "Sistema do Frentista",
+      description: "Interface ágil para validação de códigos e abastecimento na pista.",
+      icon: Fuel,
+      href: "/frentista",
+      color: "bg-orange-500",
+      badge: "Operacional"
+    },
+    {
+      title: "Gestão do Posto",
+      description: "Painel estratégico para donos e gerentes de postos parceiros.",
+      icon: Store,
+      href: "/admin-posto",
+      color: "bg-purple-600",
+      badge: "B2B Dashboard"
+    },
+    {
+      title: "Portal da Empresa",
+      description: "Gestão de vale-combustível e colaboradores para empresas (RH/Frotas).",
+      icon: Building2,
+      href: "/admin-empresa",
+      color: "bg-emerald-600",
+      badge: "Corporate"
+    },
+    {
+      title: "Admin Master (SaaS)",
+      description: "Controle total da plataforma, postos, empresas e métricas globais.",
+      icon: ShieldCheck,
+      href: "/admin",
+      color: "bg-slate-900",
+      badge: "Master Admin"
+    }
   ]
 
   return (
-    <main className="min-h-screen pb-32 pt-6 bg-slate-50">
-      <div className="max-w-lg mx-auto px-4 space-y-6">
-        
-        {/* Header Amigável */}
-        <header className="flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
-              <span className="font-bold text-xl">JS</span>
-            </div>
-            <div>
-              <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Olá, João Silva</p>
-              <h2 className="font-bold text-slate-800">Bom dia! 🚗</h2>
+    <main className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+      <div className="max-w-4xl w-full space-y-12">
+        <div className="text-center space-y-4">
+          <div className="flex justify-center">
+            <div className="p-4 bg-primary rounded-[2rem] shadow-2xl shadow-primary/20">
+              <Fuel className="w-12 h-12 text-white" />
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button variant="ghost" size="icon" className="rounded-full bg-white shadow-sm border border-slate-100">
-              <Bell className="w-5 h-5 text-slate-600" />
-            </Button>
-          </div>
-        </header>
-
-        {/* Resumo de Economia e Pontos */}
-        <div className="grid grid-cols-2 gap-4">
-          <Card className="border-none shadow-md bg-white overflow-hidden relative group">
-            <div className="absolute top-0 right-0 p-2 opacity-5">
-              <TrendingDown className="w-12 h-12 text-primary" />
-            </div>
-            <CardContent className="p-4 flex flex-col items-center justify-center text-center space-y-1">
-              <div className="p-2 bg-green-50 rounded-full mb-1">
-                <TrendingDown className="w-5 h-5 text-primary" />
-              </div>
-              <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Já economizei</p>
-              <p className="text-xl font-headline font-bold text-slate-800">R$ 1.240,50</p>
-            </CardContent>
-          </Card>
-          <Card className="border-none shadow-md bg-white overflow-hidden relative group">
-             <div className="absolute top-0 right-0 p-2 opacity-5">
-              <Star className="w-12 h-12 text-yellow-500" />
-            </div>
-            <CardContent className="p-4 flex flex-col items-center justify-center text-center space-y-1">
-              <div className="p-2 bg-yellow-50 rounded-full mb-1">
-                <Star className="w-5 h-5 text-yellow-500" />
-              </div>
-              <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Meus Pontos</p>
-              <p className="text-xl font-headline font-bold text-slate-800">12.450</p>
-            </CardContent>
-          </Card>
+          <h1 className="text-4xl font-headline font-bold text-slate-800 tracking-tight">Tá no Posto</h1>
+          <p className="text-slate-500 font-medium max-w-md mx-auto">
+            Selecione o módulo que deseja acessar para testar as funcionalidades do protótipo.
+          </p>
         </div>
 
-        {/* Banners de Publicidade/Benefícios */}
-        <Carousel className="w-full" opts={{ loop: true }}>
-          <CarouselContent>
-            {banners.map((banner) => (
-              <CarouselItem key={banner.id}>
-                <div className="relative h-48 w-full rounded-[2rem] overflow-hidden shadow-lg group">
-                  <Image 
-                    src={banner.img} 
-                    alt={banner.title} 
-                    fill 
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    data-ai-hint="gas station advertisement"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
-                    <h3 className="text-white font-bold text-xl leading-tight">{banner.title}</h3>
-                    <p className="text-white/80 text-sm mt-1">{banner.desc}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {roles.map((role, i) => (
+            <Link key={i} href={role.href}>
+              <Card className="h-full border-none shadow-lg hover:shadow-2xl transition-all hover:scale-[1.02] group cursor-pointer bg-white overflow-hidden flex flex-col">
+                <div className={`${role.color} h-2 w-full`} />
+                <CardHeader className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className={`p-3 rounded-2xl ${role.color} text-white shadow-lg`}>
+                      <role.icon className="w-6 h-6" />
+                    </div>
+                    <Badge variant="outline" className="text-[9px] font-bold uppercase tracking-widest border-slate-200">
+                      {role.badge}
+                    </Badge>
                   </div>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-
-        {/* Atalhos Rápidos */}
-        <div className="grid grid-cols-4 gap-4 py-2">
-          {[
-            { icon: Fuel, label: "Abastecer", color: "bg-green-100 text-green-700", href: "/stations" },
-            { icon: MapPin, label: "Postos", color: "bg-blue-100 text-blue-700", href: "/stations" },
-            { icon: Gift, label: "Cupons", color: "bg-purple-100 text-purple-700", href: "/coupons" },
-            { icon: Wallet, label: "Carteira", color: "bg-orange-100 text-orange-700", href: "/wallet" },
-          ].map((item, i) => (
-            <Link key={i} href={item.href} className="flex flex-col items-center gap-2 group">
-              <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-all group-hover:-translate-y-1 group-hover:shadow-lg shadow-sm", item.color)}>
-                <item.icon className="w-6 h-6" />
-              </div>
-              <span className="text-[10px] font-bold text-slate-600 uppercase tracking-tight">{item.label}</span>
+                  <CardTitle className="text-xl font-bold text-slate-800 group-hover:text-primary transition-colors">
+                    {role.title}
+                  </CardTitle>
+                  <CardDescription className="text-xs leading-relaxed mt-2">
+                    {role.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="p-6 pt-0 mt-auto">
+                  <div className="flex items-center text-xs font-bold text-slate-400 group-hover:text-primary uppercase tracking-widest transition-colors">
+                    Acessar Módulo <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </CardContent>
+              </Card>
             </Link>
           ))}
         </div>
 
-        {/* Postos Próximos */}
-        <div className="space-y-4">
-          <div className="flex justify-between items-center px-1">
-            <h3 className="font-bold text-slate-800 text-lg">Próximos a você</h3>
-            <Link href="/stations" className="text-xs font-bold text-primary flex items-center gap-1">Ver todos</Link>
-          </div>
-          <ScrollArea className="w-full whitespace-nowrap">
-            <div className="flex w-max space-x-4 pb-6">
-              {nearbyStations.map((posto) => (
-                <Card key={posto.id} className="w-56 border-none shadow-md bg-white overflow-hidden shrink-0 hover:shadow-lg transition-shadow">
-                  <div className="p-4 space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl border border-slate-100 overflow-hidden relative shrink-0">
-                        <Image src={posto.logo} alt={posto.name} fill className="object-cover" />
-                      </div>
-                      <div className="overflow-hidden">
-                        <h4 className="text-sm font-bold text-slate-800 truncate">{posto.name}</h4>
-                        <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                          <MapPin className="w-3 h-3" /> {posto.dist}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex justify-between items-center pt-3 border-t border-slate-50">
-                      <div className="space-y-0.5">
-                        <p className="text-[8px] text-muted-foreground font-bold uppercase tracking-widest">Gasolina</p>
-                        <p className="text-base font-headline font-bold text-primary">{posto.price}</p>
-                      </div>
-                      <Button size="sm" className="h-8 rounded-lg bg-slate-900 text-white font-bold text-[10px]">VER PREÇOS</Button>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
-        </div>
-
+        <footer className="text-center pt-8">
+          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">
+            Protótipo Tá no Posto • Sistema de Fidelidade e Benefícios
+          </p>
+        </footer>
       </div>
-
-      <Navigation />
     </main>
   )
 }
