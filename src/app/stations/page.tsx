@@ -25,7 +25,8 @@ import {
   AirVent,
   Store,
   Car,
-  QrCode
+  QrCode,
+  ShieldCheck
 } from "lucide-react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
@@ -145,8 +146,8 @@ export default function StationsPage() {
     localStorage.setItem('active_fuel_token', JSON.stringify(token));
     setIsFuelingDialogOpen(false);
     toast({
-      title: "Código Gerado!",
-      description: "Apresente o código ao frentista após o abastecimento.",
+      title: "Código de 6 Dígitos!",
+      description: "Apresente após o abastecimento para ganhar o desconto.",
     });
     
     router.push('/coupons');
@@ -208,7 +209,7 @@ export default function StationsPage() {
           </Card>
 
           <div className="space-y-4">
-            <h3 className="font-bold text-slate-800 px-1">Preços Disponíveis</h3>
+            <h3 className="font-bold text-slate-800 px-1">Preços no Aplicativo</h3>
             <div className="grid gap-3">
               {Object.entries(selectedStation.prices).map(([key, price]) => (
                 <Card key={key} className="border-none shadow-sm bg-white overflow-hidden">
@@ -219,7 +220,7 @@ export default function StationsPage() {
                       </div>
                       <div>
                         <p className="text-xs font-bold text-slate-700 uppercase">{key}</p>
-                        <p className="text-[10px] text-muted-foreground">Valor na bomba: R$ {price.pump.toFixed(2)}</p>
+                        <p className="text-[10px] text-muted-foreground">Bomba: R$ {price.pump.toFixed(2)}</p>
                       </div>
                     </div>
                     <div className="text-right">
@@ -249,17 +250,17 @@ export default function StationsPage() {
             </div>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 pb-8">
             <Button 
               onClick={handleOpenMaps}
               variant="outline" 
-              className="flex-1 h-14 border-primary text-primary font-bold rounded-2xl flex gap-2"
+              className="flex-1 h-14 border-slate-200 text-slate-600 font-bold rounded-2xl flex gap-2"
             >
-              <NavIcon className="w-5 h-5" /> COMO CHEGAR
+              <NavIcon className="w-5 h-5" /> MAPA
             </Button>
             <Button 
               onClick={() => setIsFuelingDialogOpen(true)}
-              className="flex-1 h-14 bg-primary text-white font-bold rounded-2xl shadow-lg shadow-primary/20 flex gap-2"
+              className="flex-[2] h-14 bg-primary text-white font-bold rounded-2xl shadow-lg shadow-primary/20 flex gap-2"
             >
               <Fuel className="w-5 h-5" /> ABASTECER AQUI
             </Button>
@@ -267,21 +268,27 @@ export default function StationsPage() {
         </div>
 
         <Dialog open={isFuelingDialogOpen} onOpenChange={setIsFuelingDialogOpen}>
-          <DialogContent className="sm:max-w-md rounded-3xl">
-            <DialogHeader>
-              <DialogTitle className="font-headline font-bold text-slate-800 text-center">Tudo pronto para abastecer?</DialogTitle>
-              <DialogDescription className="text-center">
-                Abasteça normalmente no posto. Ao final, apresente o código de 6 dígitos ao frentista para garantir seu desconto.
+          <DialogContent className="sm:max-w-md rounded-3xl border-none shadow-2xl">
+            <DialogHeader className="items-center text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-2">
+                 <QrCode className="w-8 h-8 text-primary" />
+              </div>
+              <DialogTitle className="font-headline font-bold text-slate-800 text-xl">Confirmar Abastecimento</DialogTitle>
+              <DialogDescription className="text-slate-500 font-medium px-4">
+                Abasteça normalmente no posto. Ao final, apresente o código que vamos gerar agora ao frentista.
               </DialogDescription>
             </DialogHeader>
 
-            <div className="py-6 flex flex-col items-center gap-4">
-               <div className="p-4 bg-primary/5 rounded-full">
-                  <Zap className="w-12 h-12 text-primary" />
+            <div className="py-4 space-y-4">
+               <div className="p-4 bg-slate-50 rounded-2xl space-y-2">
+                 <div className="flex items-center gap-2 text-primary">
+                   <ShieldCheck className="w-4 h-4" />
+                   <span className="text-[10px] font-bold uppercase tracking-widest">Operação Segura</span>
+                 </div>
+                 <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                   O desconto será aplicado diretamente pelo frentista e o pagamento sairá da sua carteira Tá no posto.
+                 </p>
                </div>
-               <p className="text-sm font-medium text-center text-slate-600">
-                  O desconto será aplicado automaticamente pelo frentista no momento do pagamento via app.
-               </p>
             </div>
 
             <DialogFooter>
@@ -289,7 +296,7 @@ export default function StationsPage() {
                 onClick={handleGenerateToken}
                 className="w-full h-14 bg-primary text-white font-bold rounded-2xl"
               >
-                GERAR CÓDIGO DE ATIVAÇÃO
+                GERAR CÓDIGO DE 6 DÍGITOS
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -390,11 +397,11 @@ export default function StationsPage() {
             {sortedStations.map((station) => (
               <Card 
                 key={station.id} 
-                className="border-none shadow-md overflow-hidden bg-white active:scale-[0.98] transition-transform cursor-pointer"
+                className="border-none shadow-md overflow-hidden bg-white active:scale-[0.98] transition-transform cursor-pointer rounded-[2rem]"
                 onClick={() => setSelectedStationId(station.id)}
               >
                 <CardContent className="p-0">
-                  <div className="p-4 flex gap-4">
+                  <div className="p-5 flex gap-4">
                     <div className="w-16 h-16 rounded-2xl border border-slate-50 overflow-hidden relative shrink-0 shadow-sm">
                       <Image src={station.logo} alt={station.name} fill className="object-cover" />
                     </div>
@@ -412,18 +419,18 @@ export default function StationsPage() {
                       <p className="text-[10px] text-primary font-bold">{station.dist} km de você</p>
                     </div>
                   </div>
-                  <div className="bg-slate-50/50 p-3 grid grid-cols-3 gap-2 border-t border-slate-100">
+                  <div className="bg-slate-50/50 p-4 grid grid-cols-3 gap-2 border-t border-slate-100">
                     <div className="text-center">
                       <p className="text-[8px] uppercase font-bold text-muted-foreground mb-0.5">Gasolina</p>
-                      <p className="text-sm font-headline font-bold text-slate-700">R$ {station.prices.gasolina.app.toFixed(2)}</p>
+                      <p className="text-sm font-headline font-bold text-primary">R$ {station.prices.gasolina.app.toFixed(2)}</p>
                     </div>
                     <div className="text-center border-x border-slate-200">
                       <p className="text-[8px] uppercase font-bold text-muted-foreground mb-0.5">Etanol</p>
-                      <p className="text-sm font-headline font-bold text-slate-700">R$ {station.prices.etanol.app.toFixed(2)}</p>
+                      <p className="text-sm font-headline font-bold text-primary">R$ {station.prices.etanol.app.toFixed(2)}</p>
                     </div>
                     <div className="text-center">
                       <p className="text-[8px] uppercase font-bold text-muted-foreground mb-0.5">Diesel</p>
-                      <p className="text-sm font-headline font-bold text-slate-700">R$ {station.prices.diesel.app.toFixed(2)}</p>
+                      <p className="text-sm font-headline font-bold text-primary">R$ {station.prices.diesel.app.toFixed(2)}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -470,5 +477,26 @@ export default function StationsPage() {
       </div>
       <Navigation />
     </main>
+  )
+}
+
+function Info(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 16v-4" />
+      <path d="M12 8h.01" />
+    </svg>
   )
 }
