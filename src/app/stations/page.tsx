@@ -29,7 +29,17 @@ import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
 import { db } from "@/lib/firebase"
 import { collection, onSnapshot, query, where, orderBy } from "firebase/firestore"
-import { calculateDistance, getCurrentLocation, type Station } from "@/hooks/useStations"
+import dynamic from "next/dynamic"
+
+// Importar o mapa dinamicamente para evitar erro de SSR do Leaflet
+const MapView = dynamic(() => import("@/components/MapView"), { 
+  ssr: false,
+  loading: () => (
+    <div className="h-[400px] w-full bg-slate-100 animate-pulse rounded-[2.5rem] flex items-center justify-center">
+      <Loader2 className="w-8 h-8 animate-spin text-primary" />
+    </div>
+  )
+})
 
 function StationsContent() {
   const router = useRouter()
@@ -333,137 +343,166 @@ function StationsContent() {
       <div className="max-w-lg mx-auto px-4 pt-6 space-y-6">
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold uppercase tracking-tight text-slate-800">Encontrar Posto</h1>
-            <div className="flex gap-2">
+            <div>
+              <h1 className="text-3xl font-headline font-bold text-slate-800 tracking-tight uppercase italic">Postos Parceiros</h1>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">Economia em tempo real</p>
+            </div>
+            <div className="flex bg-white p-1 rounded-2xl shadow-sm border border-slate-100">
               <Button 
-                size="icon" 
-                variant={view === "list" ? "default" : "outline"}
+                size="sm"
+                variant={view === "list" ? "default" : "ghost"}
                 onClick={() => setView("list")}
-                className={cn("rounded-xl w-10 h-10", view === "list" ? "bg-slate-900" : "bg-white text-slate-600")}
+                className={cn("rounded-xl h-10 px-4 font-bold text-[10px] uppercase tracking-widest transition-all", view === "list" ? "bg-slate-900 text-white shadow-lg" : "text-slate-500")}
               >
-                <List className="w-5 h-5" />
+                <List className="w-4 h-4 mr-2" /> LISTA
               </Button>
               <Button 
-                size="icon" 
-                variant={view === "map" ? "default" : "outline"}
+                size="sm"
+                variant={view === "map" ? "default" : "ghost"}
                 onClick={() => setView("map")}
-                className={cn("rounded-xl w-10 h-10", view === "map" ? "bg-slate-900" : "bg-white text-slate-600")}
+                className={cn("rounded-xl h-10 px-4 font-bold text-[10px] uppercase tracking-widest transition-all", view === "map" ? "bg-slate-900 text-white shadow-lg" : "text-slate-500")}
               >
-                <MapIcon className="w-5 h-5" />
+                <MapIcon className="w-4 h-4 mr-2" /> MAPA
               </Button>
             </div>
           </div>
+          
           <div className="relative group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors" />
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-all" />
             <Input 
-              placeholder="Buscar por nome, bairro ou rede" 
-              className="pl-12 h-14 rounded-2xl border-none shadow-md bg-white text-sm focus-visible:ring-primary"
+              placeholder="Buscar por nome ou endereço..." 
+              className="pl-14 h-16 rounded-3xl border-none shadow-xl shadow-slate-200/50 bg-white text-sm font-medium focus-visible:ring-primary placeholder:text-slate-400"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
 
-        <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
-          {fuelTypes.map((fuel) => (
-            <Badge
-              key={fuel.id}
-              onClick={() => setSelectedFuel(fuel.id)}
-              variant={selectedFuel === fuel.id ? "default" : "outline"}
-              className={cn(
-                "px-5 py-2 rounded-full cursor-pointer transition-all border-none shadow-sm whitespace-nowrap font-bold text-[10px] uppercase tracking-widest",
-                selectedFuel === fuel.id ? "bg-primary text-white scale-105 shadow-primary/20" : "bg-white text-slate-500 hover:bg-slate-100"
-              )}
-            >
-              {fuel.name}
-            </Badge>
-          ))}
-        </div>
+        {view === "map" && (
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="flex gap-2 overflow-x-auto py-2 custom-scrollbar no-scrollbar">
+              {fuelTypes.map((fuel) => (
+                <Badge
+                  key={fuel.id}
+                  onClick={() => setSelectedFuel(fuel.id)}
+                  variant={selectedFuel === fuel.id ? "default" : "outline"}
+                  className={cn(
+                    "px-6 py-3 rounded-2xl cursor-pointer transition-all border-none shadow-md whitespace-nowrap font-bold text-[10px] uppercase tracking-widest",
+                    selectedFuel === fuel.id ? "bg-primary text-white scale-105 shadow-primary/30" : "bg-white text-slate-500 hover:bg-slate-100"
+                  )}
+                >
+                  <Fuel className="w-3 h-3 mr-2" />
+                  {fuel.name}
+                </Badge>
+              ))}
+            </div>
 
-        <div className="space-y-4">
-          <div className="flex justify-between items-center px-1">
-            <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.2em]">{filteredAndSortedStations.length} Postos encontrados</p>
-            <div className="flex items-center gap-2">
+            <MapView 
+              stations={filteredAndSortedStations} 
+              userLocation={userLocation} 
+              fuelId={selectedFuel}
+              onSelectStation={setSelectedStationId}
+            />
+          </div>
+        )}
+
+        {view === "list" && (
+          <div className="space-y-6 animate-in fade-in duration-500">
+            <div className="flex justify-between items-center px-2">
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">
+                <span className="text-primary">{filteredAndSortedStations.length}</span> unidades próximas
+              </p>
               <Button 
                 variant="ghost" 
                 size="sm" 
                 onClick={() => setSortBy(sortBy === "distance" ? "price" : "distance")}
-                className="text-[10px] font-bold text-primary uppercase tracking-widest hover:bg-primary/5 p-0 h-auto"
+                className="text-[10px] font-bold text-slate-600 uppercase tracking-widest bg-white border border-slate-100 rounded-xl px-4 py-2 h-auto shadow-sm"
               >
-                <ArrowUpDown className="w-3 h-3 mr-1" /> 
+                <ArrowUpDown className="w-3 h-3 mr-2 text-primary" /> 
                 {sortBy === "distance" ? "Mais próximos" : "Menor preço"}
               </Button>
             </div>
-          </div>
 
-          <div className="space-y-4">
-            {filteredAndSortedStations.length > 0 ? (
-              filteredAndSortedStations.map((station) => (
-                <Card 
-                  key={station.id} 
-                  className="border-none shadow-md bg-white overflow-hidden group hover:shadow-xl transition-all cursor-pointer"
-                  onClick={() => setSelectedStationId(station.id)}
-                >
-                  <CardContent className="p-0">
-                    <div className="flex">
-                      <div className="w-28 relative overflow-hidden">
-                        {station.logo ? (
-                          <Image src={station.logo} alt={station.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
-                        ) : (
-                          <div className="w-full h-full bg-slate-100 flex items-center justify-center">
-                            <Fuel className="w-8 h-8 text-slate-300" />
+            <div className="space-y-5">
+              {filteredAndSortedStations.length > 0 ? (
+                filteredAndSortedStations.map((station) => (
+                  <Card 
+                    key={station.id} 
+                    className="border-none shadow-xl shadow-slate-200/50 bg-white rounded-[2.5rem] overflow-hidden group hover:scale-[1.02] transition-all duration-300 cursor-pointer ring-1 ring-slate-100"
+                    onClick={() => setSelectedStationId(station.id)}
+                  >
+                    <CardContent className="p-0">
+                      <div className="p-6 space-y-4">
+                        <div className="flex gap-5">
+                          <div className="w-20 h-20 relative rounded-3xl overflow-hidden shadow-inner border border-slate-50 shrink-0 bg-slate-50 flex items-center justify-center">
+                            {station.logo ? (
+                              <Image 
+                                src={station.logo} 
+                                alt={station.name} 
+                                fill 
+                                className="object-contain p-2"
+                              />
+                            ) : (
+                              <Fuel className="w-8 h-8 text-slate-200" />
+                            )}
                           </div>
-                        )}
-                        <div className="absolute top-2 left-2">
-                          <Badge className="bg-white/90 backdrop-blur-md text-slate-800 text-[8px] font-bold px-2 py-0.5 border-none shadow-sm">
-                            {station.dist ? `${station.dist.toFixed(1)} km` : "..."}
-                          </Badge>
+                          <div className="flex-1 min-w-0 space-y-1 py-1">
+                            <div className="flex justify-between items-start gap-2">
+                              <h4 className="font-bold text-lg text-slate-800 truncate uppercase italic">{station.name}</h4>
+                              <div className="flex items-center gap-1 bg-yellow-400/10 px-2 py-0.5 rounded-full shrink-0">
+                                <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+                                <span className="text-[10px] font-bold text-yellow-700">4.8</span>
+                              </div>
+                            </div>
+                            <p className="text-xs text-slate-400 truncate flex items-center gap-1">
+                              <MapPin className="w-3 h-3 text-primary" /> {station.address}
+                            </p>
+                            <div className="flex items-center gap-2 mt-2">
+                              <Badge className="bg-primary/10 text-primary text-[8px] font-bold px-3 py-1 border-none rounded-full">
+                                {station.dist ? `${station.dist.toFixed(1)} km de você` : "..."}
+                              </Badge>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+                          {fuelTypes.map((fuel) => {
+                            const fuelData = (station.prices as any)?.[fuel.id];
+                            if (!fuelData) return null;
+                            
+                            const price = fuelData.app || fuelData.discount;
+                            if (!price) return null;
+
+                            return (
+                              <div key={fuel.id} className="bg-slate-50 p-3 rounded-2xl border border-slate-100 flex flex-col items-center justify-center space-y-1">
+                                <p className="text-[8px] text-slate-400 font-bold uppercase tracking-widest">{fuel.name}</p>
+                                <p className="text-sm font-bold text-primary tracking-tight">R$ {Number(price).toFixed(2)}</p>
+                              </div>
+                            )
+                          })}
+                          <div className="bg-slate-900 flex items-center justify-center p-3 rounded-2xl group-hover:bg-primary transition-colors">
+                            <ChevronRight className="w-5 h-5 text-white" />
+                          </div>
                         </div>
                       </div>
-                      <div className="flex-1 p-4 space-y-3">
-                        <div>
-                          <h4 className="font-bold text-slate-800">{station.name}</h4>
-                          <p className="text-[10px] text-muted-foreground truncate leading-relaxed">{station.address}</p>
-                        </div>
-                        <div className="flex flex-col justify-end">
-                          <div className="flex flex-wrap gap-2 justify-end">
-                            {fuelTypes.map((fuel) => {
-                              const fuelData = (station.prices as any)?.[fuel.id];
-                              if (!fuelData) return null;
-                              
-                              const price = fuelData.app || fuelData.discount;
-                              if (!price) return null;
-
-                              return (
-                                <div key={fuel.id} className="text-right bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
-                                  <p className="text-[7px] text-muted-foreground font-bold uppercase tracking-widest leading-none">
-                                    {fuel.name.substring(0, 3)}
-                                  </p>
-                                  <p className="text-xs font-bold text-primary leading-tight">
-                                    R$ {Number(price).toFixed(2)}
-                                  </p>
-                                </div>
-                              )
-                            })}
-                          </div>
-                          <div className="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-lg mt-2 self-end">
-                            <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                            <span className="text-[10px] font-bold text-yellow-700">4.8</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
-            ) : (
-              <div className="p-10 text-center space-y-2">
-                <Fuel className="w-12 h-12 text-slate-200 mx-auto" />
-                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest italic">Nenhum posto encontrado</p>
-              </div>
-            )}
+                    </CardContent>
+                  </Card>
+                ))
+              ) : (
+                <div className="p-20 text-center space-y-4">
+                  <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto">
+                    <Fuel className="w-10 h-10 text-slate-300" />
+                  </div>
+                  <p className="text-sm font-bold text-slate-400 uppercase tracking-widest italic">Nenhum posto encontrado</p>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
+      </div>
+
+      <Navigation />
+    </main>
 
       </div>
 
