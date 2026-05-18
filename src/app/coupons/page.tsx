@@ -35,10 +35,19 @@ export default function CouponsPage() {
     checkToken();
 
     // Buscar cupons reais (ex: promoções gerais do banco de dados)
-    const q = query(collection(db, "promotions"), where("active", "==", true), orderBy("createdAt", "desc"));
+    const q = query(collection(db, "promotions"), where("active", "==", true));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setCoupons(docs);
+      // Ordenar manualmente para evitar erro de índice no Firestore
+      const sortedDocs = docs.sort((a: any, b: any) => {
+        const dateA = a.createdAt?.toDate?.() || new Date(0);
+        const dateB = b.createdAt?.toDate?.() || new Date(0);
+        return dateB - dateA;
+      });
+      setCoupons(sortedDocs);
+      setLoading(false);
+    }, (error) => {
+      console.error("Erro ao buscar promoções:", error);
       setLoading(false);
     });
 
