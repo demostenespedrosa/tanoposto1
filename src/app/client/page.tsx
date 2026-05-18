@@ -94,149 +94,152 @@ function ClientContent() {
   ]
 
   return (
-    <main className="min-h-screen pb-32 pt-6 bg-slate-50 text-slate-900 animate-in fade-in duration-700">
-      <div className="max-w-lg mx-auto px-5 space-y-10">
+    <main className="min-h-screen pb-32 pt-12 bg-[#F2F2F7] text-black animate-in fade-in duration-1000">
+      <div className="max-w-lg mx-auto px-6 space-y-8">
         
-        {/* Header Ultra Premium */}
-        <header className="flex justify-between items-end pt-4">
-          <div className="space-y-1">
-            <p className="text-[10px] text-primary uppercase font-black tracking-[0.3em] leading-none">Status: Platinum</p>
-            <h2 className="font-headline font-bold text-4xl text-slate-900 tracking-tighter italic uppercase">
-              Olá, <span className="text-primary">{user?.displayName?.split(' ')[0] || "João"}</span>
-            </h2>
+        {/* iOS Native Style Header */}
+        <header className="flex justify-between items-center">
+          <div className="flex flex-col">
+            <span className="text-[13px] font-semibold text-[#8E8E93] tracking-tight">Segunda, 18 de Maio</span>
+            <h1 className="text-3xl font-bold tracking-tight text-black">Olá, {user?.displayName?.split(' ')[0] || "João"}</h1>
           </div>
-          <Button variant="ghost" size="icon" className="relative h-14 w-14 rounded-[1.5rem] bg-white shadow-xl shadow-slate-200/50 border border-slate-100">
-            <Bell className="w-6 h-6 text-slate-400" />
-            <span className="absolute top-3 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
-          </Button>
-        </header>
-
-        {/* Banner Carrossel com Estilo Apple */}
-        <section className="-mx-5">
-          <Carousel className="w-full">
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {banners.map((banner) => (
-                <CarouselItem key={banner.id} className="pl-5 basis-[92%]">
-                  <div className="relative h-56 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-primary/20 group">
-                    <Image 
-                      src={banner.img} 
-                      alt={banner.title} 
-                      fill 
-                      className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-end p-8">
-                       <span className="bg-primary hover:bg-primary/90 text-[8px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full w-fit mb-3 text-white">Promoção Ativa</span>
-                       <h3 className="text-white font-headline font-bold text-2xl leading-none italic uppercase tracking-tighter">{banner.title}</h3>
-                       <p className="text-white/60 text-[11px] font-medium mt-2 uppercase tracking-widest">{banner.desc}</p>
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </section>
-
-        {/* Cards de Saldo Rápido */}
-        <div className="grid grid-cols-2 gap-4">
-          <Card className="bg-slate-900 border-none rounded-[2.5rem] p-6 shadow-2xl relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
-            <CardContent className="p-0 space-y-4 relative z-10">
-              <div className="flex items-center gap-2">
-                <div className="p-2 bg-primary/20 rounded-xl">
-                  <Wallet className="w-4 h-4 text-primary" />
+          <div className="flex gap-3">
+            <Link href="/notifications" className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/5 active:scale-90 transition-transform">
+              <Bell className="w-5 h-5 text-black" />
+            </Link>
+            <Link href="/profile" className="w-10 h-10 rounded-full overflow-hidden border border-black/5 shadow-sm active:scale-90 transition-transform">
+              {user?.photoURL ? (
+                <Image src={user.photoURL} alt="User" width={40} height={40} className="object-cover" />
+              ) : (
+                <div className="w-full h-full bg-[#E5E5EA] flex items-center justify-center">
+                  <span className="text-xs font-bold text-[#8E8E93]">JS</span>
                 </div>
-                <span className="text-[9px] font-bold text-white/40 uppercase tracking-widest">Saldo Loop</span>
-              </div>
-              <p className="text-2xl font-headline font-bold text-white italic tracking-tighter">R$ 542,00</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white border-none rounded-[2.5rem] p-6 shadow-2xl shadow-slate-200/50 relative overflow-hidden">
-            <CardContent className="p-0 space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="p-2 bg-slate-100 rounded-xl">
-                  <Star className="w-4 h-4 text-primary" />
-                </div>
-                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Pontos</span>
-              </div>
-              <p className="text-2xl font-headline font-bold text-slate-800 italic tracking-tighter">1.250</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Postos Próximos - Lista Horizontal Nativa */}
-        <section className="space-y-6">
-          <div className="flex justify-between items-end">
-            <div>
-              <h3 className="font-headline font-bold text-2xl text-slate-900 italic tracking-tighter uppercase">Abastecer</h3>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Preços e postos em tempo real</p>
-            </div>
-            <Link href="/stations" className="w-10 h-10 bg-white shadow-lg rounded-2xl flex items-center justify-center border border-slate-50">
-              <TrendingDown className="w-5 h-5 text-primary" />
+              )}
             </Link>
           </div>
+        </header>
 
-          <ScrollArea className="w-full -mx-5 px-5" orientation="horizontal">
-            <div className="flex gap-6 pb-8">
-              {loadingStations ? (
-                Array(3).fill(0).map((_, i) => (
-                  <div key={i} className="w-64 h-80 bg-white rounded-[2.5rem] shadow-xl animate-pulse" />
-                ))
-              ) : sortedNearbyStations.map((station) => (
-                <Link key={station.id} href={`/stations?id=${station.id}`}>
-                  <Card className="w-64 border-none shadow-2xl shadow-slate-200/80 bg-white group hover:-translate-y-2 transition-all duration-500 rounded-[2.5rem] overflow-hidden">
-                    <div className="relative h-32 bg-slate-900 flex items-center justify-center">
-                       {station.logo ? (
-                         <Image src={station.logo} alt={station.name} fill className="object-cover opacity-60" />
-                       ) : (
-                         <Fuel className="w-12 h-12 text-primary opacity-20" />
-                       )}
-                       <div className="absolute top-4 right-4 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
-                          <span className="text-[9px] text-white font-black">{station.distance?.toFixed(1)}KM</span>
-                       </div>
-                    </div>
-                    <CardContent className="p-6 space-y-5">
-                      <div className="space-y-1">
-                        <h4 className="font-bold text-slate-800 text-sm truncate uppercase tracking-tight">{station.name}</h4>
-                        <p className="text-[9px] text-slate-400 font-medium truncate italic">{station.address || "Endereço não disponível"}</p>
-                      </div>
-                      
-                      <div className="flex items-center justify-between p-4 bg-slate-50 rounded-[1.5rem] border border-slate-100">
-                         <div className="space-y-0.5">
-                            <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest">Gasolina</span>
-                            <p className="text-xl font-headline font-bold text-primary italic tracking-tighter leading-none">
-                               R$ {Number((station.prices as any)?.gasolina?.app || 0).toFixed(2).replace('.', ',')}
-                            </p>
-                         </div>
-                         <Button className="h-10 w-10 rounded-xl bg-slate-900 text-white p-0 hover:bg-primary transition-colors">
-                            <QrCode className="w-5 h-5" />
-                         </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
+        {/* Home Widget - iOS Style */}
+        <section className="relative">
+          <div className="bg-white rounded-[2.5rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-black/[0.02] flex flex-col items-center text-center space-y-6 overflow-hidden relative group active:scale-[0.98] transition-transform duration-300">
+            {/* Background Decorative Element */}
+            <div className="absolute -top-20 -right-20 w-48 h-48 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
+            
+            <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mb-2">
+              <Fuel className="w-10 h-10 text-primary" />
             </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
+            
+            <div className="space-y-1">
+              <h2 className="text-2xl font-bold tracking-tight text-black">Pronto para abastecer?</h2>
+              <p className="text-sm text-[#8E8E93] font-medium">Economize até R$ 0,45 por litro hoje</p>
+            </div>
+
+            <Button className="w-full h-14 rounded-2xl bg-black text-white hover:bg-black/90 text-md font-bold shadow-xl shadow-black/10 flex gap-3">
+              <QrCode className="w-5 h-5" />
+              Escanear Bomba
+            </Button>
+          </div>
         </section>
 
-        {/* Ações Rápidas Ultra Clean */}
-        <section className="pb-10 grid grid-cols-4 gap-4">
-           {[
-             { icon: MapPin, label: "Mapa", href: "/navigator", color: "bg-blue-500" },
-             { icon: Gift, label: "Ofertas", href: "/coupons", color: "bg-purple-500" },
-             { icon: Wallet, label: "Extrato", href: "/wallet", color: "bg-orange-500" },
-             { icon: TrendingDown, label: "Preços", href: "/stations", color: "bg-green-500" }
-           ].map((action, i) => (
-             <Link key={i} href={action.href} className="flex flex-col items-center gap-3">
-                <div className="w-16 h-16 bg-white shadow-xl shadow-slate-200/50 rounded-[1.75rem] flex items-center justify-center border border-slate-50 transition-transform active:scale-90 overflow-hidden relative group">
-                   <div className={cn("absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity", action.color)}></div>
-                   <action.icon className="w-6 h-6 text-slate-700 group-hover:text-primary transition-colors" />
+        {/* Quick Stats - iOS Cards */}
+        <div className="grid grid-cols-2 gap-4">
+          <Link href="/wallet" className="bg-white rounded-[2rem] p-6 border border-black/[0.02] shadow-sm active:scale-95 transition-transform flex flex-col justify-between h-36">
+            <div className="w-10 h-10 rounded-2xl bg-[#34C759]/10 flex items-center justify-center">
+              <Wallet className="w-5 h-5 text-[#34C759]" />
+            </div>
+            <div className="space-y-0.5">
+              <span className="text-[12px] font-semibold text-[#8E8E93]">Seu Saldo</span>
+              <p className="text-xl font-bold tracking-tight text-black">R$ 542,00</p>
+            </div>
+          </Link>
+
+          <Link href="/rewards" className="bg-white rounded-[2rem] p-6 border border-black/[0.02] shadow-sm active:scale-95 transition-transform flex flex-col justify-between h-36">
+            <div className="w-10 h-10 rounded-2xl bg-[#FF9500]/10 flex items-center justify-center">
+              <Star className="w-5 h-5 text-[#FF9500]" />
+            </div>
+            <div className="space-y-0.5">
+              <span className="text-[12px] font-semibold text-[#8E8E93]">Pontos Loop</span>
+              <p className="text-xl font-bold tracking-tight text-black">1.250 pts</p>
+            </div>
+          </Link>
+        </div>
+
+        {/* Main Banner / Promotion */}
+        <section>
+          <div className="relative h-44 rounded-[2rem] overflow-hidden group active:scale-[0.98] transition-all">
+            <Image 
+              src="https://images.unsplash.com/photo-1554629947-334ff61d85dc?q=80&w=1000&auto=format&fit=crop"
+              alt="Promotion"
+              fill
+              className="object-cover transition-transform duration-1000 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex flex-col justify-center p-8 space-y-2">
+              <Badge className="bg-white/20 hover:bg-white/30 text-white border-white/20 w-fit text-[10px] uppercase font-bold tracking-wider">Oferta Hero</Badge>
+              <h3 className="text-2xl font-bold text-white tracking-tight leading-none">Indique um Amigo e<br/>ganhe R$ 20,00</h3>
+            </div>
+          </div>
+        </section>
+
+        {/* Nearby Stations - Apple Style Scroll */}
+        <section className="space-y-5">
+          <div className="flex justify-between items-end">
+            <h3 className="text-xl font-bold tracking-tight text-black">Postos Próximos</h3>
+            <Link href="/stations" className="text-sm font-semibold text-primary">Ver todos</Link>
+          </div>
+
+          <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar -mx-6 px-6">
+            {loadingStations ? (
+              Array(3).fill(0).map((_, i) => (
+                <div key={i} className="min-w-[280px] h-[160px] bg-white rounded-3xl animate-pulse" />
+              ))
+            ) : sortedNearbyStations.map((station) => (
+              <Link key={station.id} href={`/stations?id=${station.id}`} className="min-w-[280px] bg-white rounded-[2rem] p-5 shadow-sm border border-black/[0.02] active:scale-95 transition-transform flex flex-col gap-4">
+                <div className="flex gap-4 items-center">
+                  <div className="w-12 h-12 rounded-2xl bg-[#F2F2F7] flex items-center justify-center overflow-hidden border border-black/[0.05]">
+                    {station.logo ? (
+                      <Image src={station.logo} alt={station.name} width={48} height={48} className="object-cover" />
+                    ) : (
+                      <Fuel className="w-6 h-6 text-[#8E8E93]" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-black text-sm truncate">{station.name}</h4>
+                    <span className="text-[11px] font-medium text-[#8E8E93] flex items-center gap-1">
+                      <MapPin className="w-3 h-3" />
+                      {station.distance?.toFixed(1)} km • {station.address?.split(',')[0]}
+                    </span>
+                  </div>
                 </div>
-                <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">{action.label}</span>
-             </Link>
-           ))}
+
+                <div className="flex items-center justify-between pt-2 border-t border-black/[0.03]">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-bold text-[#8E8E93] uppercase tracking-wider">Gasolina</span>
+                    <p className="text-lg font-bold text-black">R$ {Number((station.prices as any)?.gasolina?.app || 0).toFixed(2).replace('.', ',')}</p>
+                  </div>
+                  <div className="h-10 px-4 bg-primary rounded-xl flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-primary/20">
+                    Ir agora
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Global Navigation Shortcut */}
+        <section className="pb-10 grid grid-cols-4 gap-4">
+          {[
+            { icon: MapPin, label: "Mapa", href: "/navigator", color: "text-[#007AFF]" },
+            { icon: Gift, label: "Cupons", href: "/coupons", color: "text-[#AF52DE]" },
+            { icon: TrendingDown, label: "Preços", href: "/stations", color: "text-[#34C759]" },
+            { icon: History, label: "Atividade", href: "/wallet", color: "text-[#FF9500]" }
+          ].map((item, i) => (
+            <Link key={i} href={item.href} className="flex flex-col items-center gap-2">
+              <div className="w-14 h-14 rounded-2xl bg-white border border-black/[0.02] shadow-sm flex items-center justify-center active:bg-[#F2F2F7] active:scale-90 transition-all">
+                <item.icon className={cn("w-6 h-6", item.color)} />
+              </div>
+              <span className="text-[10px] font-bold text-[#8E8E93]">{item.label}</span>
+            </Link>
+          ))}
         </section>
 
       </div>
