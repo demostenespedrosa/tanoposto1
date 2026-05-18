@@ -17,7 +17,8 @@ import {
   Star, 
   TrendingDown, 
   Loader2,
-  QrCode 
+  QrCode,
+  Badge 
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
