@@ -18,6 +18,7 @@ import {
   TrendingDown, 
   Loader2,
   QrCode,
+  ChevronRight,
   History
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -190,32 +191,36 @@ function ClientContent() {
                 <div key={i} className="min-w-[280px] h-[160px] bg-white rounded-3xl animate-pulse" />
               ))
             ) : sortedNearbyStations.map((station) => (
-              <Link key={station.id} href={`/stations?id=${station.id}`} className="min-w-[280px] bg-white rounded-[2rem] p-5 shadow-sm border border-black/[0.02] active:scale-95 transition-transform flex flex-col gap-4">
+              <Link key={station.id} href={`/stations?id=${station.id}`} className="min-w-[280px] bg-white rounded-[2rem] p-5 shadow-sm border border-black/[0.02] active:scale-90 transition-transform flex flex-col gap-4">
                 <div className="flex gap-4 items-center">
-                  <div className="w-12 h-12 rounded-2xl bg-[#F2F2F7] flex items-center justify-center overflow-hidden border border-black/[0.05]">
+                  <div className="w-14 h-14 rounded-2xl bg-[#F2F2F7] flex items-center justify-center overflow-hidden border border-black/[0.05]">
                     {station.logo ? (
-                      <Image src={station.logo} alt={station.name} width={48} height={48} className="object-cover" />
+                      <Image src={station.logo} alt={station.name} width={56} height={56} className="object-cover" />
                     ) : (
-                      <Fuel className="w-6 h-6 text-[#8E8E93]" />
+                      <Fuel className="w-7 h-7 text-[#8E8E93]" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-black text-sm truncate">{station.name}</h4>
-                    <span className="text-[11px] font-medium text-[#8E8E93] flex items-center gap-1">
-                      <MapPin className="w-3 h-3" />
+                    <h4 className="font-bold text-black text-[15px] truncate">{station.name}</h4>
+                    <span className="text-[12px] font-medium text-[#8E8E93] flex items-center gap-1 mt-0.5">
+                      <MapPin className="w-3.5 h-3.5" />
                       {station.distance?.toFixed(1)} km • {station.address?.split(',')[0]}
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-black/[0.03]">
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-bold text-[#8E8E93] uppercase tracking-wider">Gasolina</span>
-                    <p className="text-lg font-bold text-black">R$ {Number((station.prices as any)?.gasolina?.app || 0).toFixed(2).replace('.', ',')}</p>
+                  <div className="flex items-center gap-2">
+                    <div className="flex -space-x-2">
+                       {[1,2,3].map(i => (
+                         <div key={i} className="w-6 h-6 rounded-full border-2 border-white bg-[#E5E5EA] flex items-center justify-center">
+                            <Star className="w-3 h-3 text-[#FF9500] fill-[#FF9500]" />
+                         </div>
+                       ))}
+                    </div>
+                    <span className="text-[10px] font-bold text-[#8E8E93] uppercase tracking-wider">Aberto agora</span>
                   </div>
-                  <div className="h-10 px-4 bg-primary rounded-xl flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-primary/20">
-                    Ir agora
-                  </div>
+                  <ChevronRight className="w-5 h-5 text-[#C7C7CC]" />
                 </div>
               </Link>
             ))}
