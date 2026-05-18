@@ -18,8 +18,9 @@ import {
   TrendingDown, 
   Loader2,
   QrCode,
-  Badge 
+  History
 } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
@@ -29,7 +30,7 @@ import { calculateDistance, getCurrentLocation, type Station } from "@/hooks/use
 import { useAuth } from "@/hooks/useAuth"
 
 function ClientContent() {
-  const { user } = useAuth()
+  const { currentUser: user } = useAuth()
   const [stations, setStations] = useState<Station[]>([])
   const [loadingStations, setLoadingStations] = useState(true)
   const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null)
