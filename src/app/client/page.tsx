@@ -25,7 +25,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { db } from "@/lib/firebase"
-import { collection, onSnapshot, query, where, orderBy, limit } from "firebase/firestore"
+import { collection, onSnapshot, query, where, orderBy, limit, doc } from "firebase/firestore"
 import { calculateDistance, getCurrentLocation, type Station } from "@/hooks/useStations"
 import { useAuth } from "@/hooks/useAuth"
 
@@ -35,12 +35,26 @@ function ClientContent() {
   const [loadingStations, setLoadingStations] = useState(true)
   const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null)
   const [fuelTypes, setFuelTypes] = useState<{id: string, name: string}[]>([])
+  const [userData, setUserData] = useState({ balance: 0, points: 0 })
 
   useEffect(() => {
+    if (!user) return;
+
     // Pegar localização real
     getCurrentLocation()
       .then(loc => setUserLocation(loc))
       .catch(err => console.error("Erro ao pegar localização:", err))
+
+    // Escutar dados do usuário em tempo real (Saldo e Pontos)
+    const unsubscribeUser = onSnapshot(doc(db, "users", user.uid), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        setUserData({
+          balance: data.balance || 0,
+          points: data.points || 0
+        });
+      }
+    });
 
     // Escutar postos ativos do Firestore
     const q = query(collection(db, "stations"), where("status", "==", "ativo"))
@@ -66,8 +80,9 @@ function ClientContent() {
     return () => {
       unsubscribe()
       unsubscribeFuels()
+      unsubscribeUser()
     }
-  }, [])
+  }, [user])
 
   // Calcular distâncias e ordenar
   const sortedNearbyStations = useMemo(() => {
@@ -129,7 +144,9 @@ function ClientContent() {
             </div>
             <div className="space-y-0.5">
               <span className="text-[12px] font-semibold text-[#8E8E93]">Seu Saldo</span>
-              <p className="text-xl font-bold tracking-tight text-black">R$ 542,00</p>
+              <p className="text-xl font-bold tracking-tight text-black">
+                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(userData.balance)}
+              </p>
             </div>
           </Link>
 
@@ -139,7 +156,7 @@ function ClientContent() {
             </div>
             <div className="space-y-0.5">
               <span className="text-[12px] font-semibold text-[#8E8E93]">Pontos Loop</span>
-              <p className="text-xl font-bold tracking-tight text-black">1.250 pts</p>
+              <p className="text-xl font-bold tracking-tight text-black">{userData.points.toLocaleString()} pts</p>
             </div>
           </Link>
         </div>

@@ -13,41 +13,44 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 export default function WalletPage() {
-  const { user } = useAuth()
+  const { currentUser: user } = useAuth()
   const [transactions, setTransactions] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [walletData, setWalletData] = useState({ balance: 372.60, points: 1250, totalSaved: 85.40 })
+  const [walletData, setWalletData] = useState({ balance: 0, points: 0, totalSaved: 0, level: 'Silver' })
 
   useEffect(() => {
     if (!user) return;
 
-    // Buscar histórico real de transações do usuário
+    // Buscar histórico real de transações do usuário em tempo real
     const q = query(
       collection(db, "transactions"), 
       where("userId", "==", user.uid),
       orderBy("createdAt", "desc")
     );
     
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    const unsubscribeTransactions = onSnapshot(q, (snapshot) => {
       const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setTransactions(docs);
       setLoading(false);
     });
 
-    // Buscar dados consolidados da carteira/perfil
-    const userRef = doc(db, "users", user.uid);
-    getDoc(userRef).then(snap => {
+    // Escutar dados do usuário em tempo real
+    const unsubscribeUser = onSnapshot(doc(db, "users", user.uid), (snap) => {
       if (snap.exists()) {
         const data = snap.data();
         setWalletData({
-          balance: data.balance || 372.60,
-          points: data.points || 1250,
-          totalSaved: data.totalSaved || 85.40
+          balance: data.balance || 0,
+          points: data.points || 0,
+          totalSaved: data.totalSaved || 0,
+          level: data.nivel || 'Silver'
         });
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribeTransactions();
+      unsubscribeUser();
+    };
   }, [user]);
 
   return (
@@ -92,7 +95,7 @@ export default function WalletPage() {
                  </div>
                  <div className="space-y-1">
                    <p className="text-[9px] font-bold text-white/30 uppercase tracking-wider">Status</p>
-                   <p className="text-sm font-bold uppercase tracking-tight text-white/90">Silver Member</p>
+                   <p className="text-sm font-bold uppercase tracking-tight text-white/90">{walletData.level} Member</p>
                  </div>
                </div>
                <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 active:scale-90 transition-transform">
