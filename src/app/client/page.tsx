@@ -84,76 +84,40 @@ function ClientContent() {
   ]
 
   return (
-    <main className="min-h-screen pb-32 pt-6 bg-slate-50 text-slate-900">
-      <div className="max-w-lg mx-auto px-4 space-y-8">
+    <main className="min-h-screen pb-32 pt-6 bg-slate-50 text-slate-900 animate-in fade-in duration-700">
+      <div className="max-w-lg mx-auto px-5 space-y-10">
         
-        {/* Header Amigável */}
-        <header className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-[1.5rem] bg-slate-900 flex items-center justify-center text-white shadow-xl shadow-slate-200 ring-4 ring-white">
-              <span className="font-bold text-xl uppercase italic">
-                {user?.displayName ? user.displayName.substring(0, 2) : "JS"}
-              </span>
-            </div>
-            <div>
-              <p className="text-[10px] text-primary uppercase font-bold tracking-[0.2em]">Bem-vindo de volta</p>
-              <h2 className="font-bold text-xl text-slate-800 tracking-tight">João Silva 👋</h2>
-            </div>
+        {/* Header Ultra Premium */}
+        <header className="flex justify-between items-end pt-4">
+          <div className="space-y-1">
+            <p className="text-[10px] text-primary uppercase font-black tracking-[0.3em] leading-none">Status: Platinum</p>
+            <h2 className="font-headline font-bold text-4xl text-slate-900 tracking-tighter italic uppercase">
+              Olá, <span className="text-primary">{user?.displayName?.split(' ')[0] || "João"}</span>
+            </h2>
           </div>
-          <div className="flex gap-2">
-            <Button variant="ghost" size="icon" className="rounded-2xl bg-white shadow-sm border border-slate-100 h-12 w-12">
-              <Bell className="w-6 h-6 text-slate-600" />
-            </Button>
-          </div>
+          <Button variant="ghost" size="icon" className="relative h-14 w-14 rounded-[1.5rem] bg-white shadow-xl shadow-slate-200/50 border border-slate-100">
+            <Bell className="w-6 h-6 text-slate-400" />
+            <span className="absolute top-3 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
+          </Button>
         </header>
 
-        {/* Card de Saldo Centralizado */}
-        <Card className="border-none shadow-2xl bg-white rounded-[2.5rem] overflow-hidden group">
-          <CardContent className="p-8 space-y-6">
-            <div className="flex justify-between items-center">
-              <div className="space-y-1">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Saldo na Carteira</p>
-                <div className="flex items-baseline gap-1">
-                   <span className="text-sm font-bold text-slate-400">R$</span>
-                   <h3 className="text-4xl font-headline font-bold text-slate-900 tracking-tight">372,60</h3>
-                </div>
-              </div>
-              <Link href="/wallet">
-                <Button size="icon" className="rounded-2xl bg-primary shadow-lg shadow-primary/20 h-14 w-14 hover:scale-105 transition-transform">
-                  <Wallet className="w-6 h-6" />
-                </Button>
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-slate-50">
-              <div className="space-y-1">
-                <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Economia Total</p>
-                <p className="text-sm font-bold text-green-600 flex items-center gap-1">
-                  <TrendingDown className="w-4 h-4" /> R$ 85,40
-                </p>
-              </div>
-              <div className="space-y-1 border-l pl-4 border-slate-50">
-                <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Pontos Loop</p>
-                <p className="text-sm font-bold text-primary flex items-center gap-1">
-                  <Star className="w-4 h-4 fill-primary" /> 1.250
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Banner Promocionais */}
-        <section className="space-y-4">
+        {/* Banner Carrossel com Estilo Apple */}
+        <section className="-mx-5">
           <Carousel className="w-full">
-            <CarouselContent>
+            <CarouselContent className="-ml-2 md:-ml-4">
               {banners.map((banner) => (
-                <CarouselItem key={banner.id}>
-                  <div className="relative h-44 w-full rounded-[2.5rem] overflow-hidden group shadow-xl ring-1 ring-slate-100">
-                    <Image src={banner.img} alt={banner.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent p-8 flex flex-col justify-center">
-                      <h3 className="text-white font-bold text-xl uppercase italic tracking-tight">{banner.title}</h3>
-                      <p className="text-white/80 text-xs font-medium mt-1">{banner.desc}</p>
-                      <Button variant="link" className="text-white text-[10px] font-bold uppercase tracking-widest p-0 h-auto mt-4 w-fit">VER OFERTA →</Button>
+                <CarouselItem key={banner.id} className="pl-5 basis-[92%]">
+                  <div className="relative h-56 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-primary/20 group">
+                    <Image 
+                      src={banner.img} 
+                      alt={banner.title} 
+                      fill 
+                      className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-end p-8">
+                       <span className="bg-primary hover:bg-primary/90 text-[8px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full w-fit mb-3 text-white">Promoção Ativa</span>
+                       <h3 className="text-white font-headline font-bold text-2xl leading-none italic uppercase tracking-tighter">{banner.title}</h3>
+                       <p className="text-white/60 text-[11px] font-medium mt-2 uppercase tracking-widest">{banner.desc}</p>
                     </div>
                   </div>
                 </CarouselItem>
@@ -162,50 +126,81 @@ function ClientContent() {
           </Carousel>
         </section>
 
-        {/* Postos Próximos - Reais */}
-        <section className="space-y-5">
-          <div className="flex items-center justify-between px-2">
-            <h3 className="font-bold text-slate-800 text-lg uppercase italic tracking-tight flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-primary" /> Postos Próximos
-            </h3>
-            <Link href="/stations" className="text-[10px] font-bold text-primary uppercase tracking-widest">VER MAPA</Link>
+        {/* Cards de Saldo Rápido */}
+        <div className="grid grid-cols-2 gap-4">
+          <Card className="bg-slate-900 border-none rounded-[2.5rem] p-6 shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+            <CardContent className="p-0 space-y-4 relative z-10">
+              <div className="flex items-center gap-2">
+                <div className="p-2 bg-primary/20 rounded-xl">
+                  <Wallet className="w-4 h-4 text-primary" />
+                </div>
+                <span className="text-[9px] font-bold text-white/40 uppercase tracking-widest">Saldo Loop</span>
+              </div>
+              <p className="text-2xl font-headline font-bold text-white italic tracking-tighter">R$ 542,00</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border-none rounded-[2.5rem] p-6 shadow-2xl shadow-slate-200/50 relative overflow-hidden">
+            <CardContent className="p-0 space-y-4">
+              <div className="flex items-center gap-2">
+                <div className="p-2 bg-slate-100 rounded-xl">
+                  <Star className="w-4 h-4 text-primary" />
+                </div>
+                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Pontos</span>
+              </div>
+              <p className="text-2xl font-headline font-bold text-slate-800 italic tracking-tighter">1.250</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Postos Próximos - Lista Horizontal Nativa */}
+        <section className="space-y-6">
+          <div className="flex justify-between items-end">
+            <div>
+              <h3 className="font-headline font-bold text-2xl text-slate-900 italic tracking-tighter uppercase">Abastecer</h3>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Preços e postos em tempo real</p>
+            </div>
+            <Link href="/stations" className="w-10 h-10 bg-white shadow-lg rounded-2xl flex items-center justify-center border border-slate-50">
+              <TrendingDown className="w-5 h-5 text-primary" />
+            </Link>
           </div>
 
-          <ScrollArea className="w-full whitespace-nowrap pb-4">
-            <div className="flex gap-4">
+          <ScrollArea className="w-full -mx-5 px-5" orientation="horizontal">
+            <div className="flex gap-6 pb-8">
               {loadingStations ? (
                 Array(3).fill(0).map((_, i) => (
-                  <div key={i} className="w-72 h-44 bg-slate-200 animate-pulse rounded-[2rem]" />
+                  <div key={i} className="w-64 h-80 bg-white rounded-[2.5rem] shadow-xl animate-pulse" />
                 ))
               ) : sortedNearbyStations.map((station) => (
                 <Link key={station.id} href={`/stations?id=${station.id}`}>
-                  <Card className="w-72 border-none shadow-xl bg-white rounded-[2rem] overflow-hidden group hover:scale-[1.02] transition-all duration-300 ring-1 ring-slate-50">
-                    <CardContent className="p-5 space-y-4">
-                      <div className="flex gap-4 items-start">
-                        <div className="w-16 h-16 rounded-2xl border border-slate-50 overflow-hidden relative shrink-0 shadow-sm bg-white p-2">
-                          {station.logo ? (
-                            <Image src={station.logo} alt={station.name} fill className="object-contain p-1" />
-                          ) : (
-                            <Fuel className="w-full h-full text-slate-100" />
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-bold text-slate-800 truncate uppercase italic tracking-tighter">{station.name}</h4>
-                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">
-                            {station.distance < 999 ? `${station.distance.toFixed(1)} km de você` : "Calculando..."}
-                          </p>
-                          <div className="flex items-center gap-1 mt-2">
-                            <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                            <span className="text-[10px] font-bold text-yellow-700">4.8</span>
-                          </div>
-                        </div>
+                  <Card className="w-64 border-none shadow-2xl shadow-slate-200/80 bg-white group hover:-translate-y-2 transition-all duration-500 rounded-[2.5rem] overflow-hidden">
+                    <div className="relative h-32 bg-slate-900 flex items-center justify-center">
+                       {station.logo ? (
+                         <Image src={station.logo} alt={station.name} fill className="object-cover opacity-60" />
+                       ) : (
+                         <Fuel className="w-12 h-12 text-primary opacity-20" />
+                       )}
+                       <div className="absolute top-4 right-4 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
+                          <span className="text-[9px] text-white font-black">{station.distance?.toFixed(1)}KM</span>
+                       </div>
+                    </div>
+                    <CardContent className="p-6 space-y-5">
+                      <div className="space-y-1">
+                        <h4 className="font-bold text-slate-800 text-sm truncate uppercase tracking-tight">{station.name}</h4>
+                        <p className="text-[9px] text-slate-400 font-medium truncate italic">{station.address || "Endereço não disponível"}</p>
                       </div>
                       
-                      <div className="bg-slate-50 p-3 rounded-2xl flex items-center justify-between">
-                         <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Gasolina Comum</span>
-                         <span className="text-sm font-bold text-primary tracking-tight">
-                           R$ {Number((station.prices as any)?.[Object.keys(station.prices || {})[0]]?.app || 0).toFixed(2)}
-                         </span>
+                      <div className="flex items-center justify-between p-4 bg-slate-50 rounded-[1.5rem] border border-slate-100">
+                         <div className="space-y-0.5">
+                            <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest">Gasolina</span>
+                            <p className="text-xl font-headline font-bold text-primary italic tracking-tighter leading-none">
+                               R$ {Number((station.prices as any)?.gasolina?.app || 0).toFixed(2).replace('.', ',')}
+                            </p>
+                         </div>
+                         <Button className="h-10 w-10 rounded-xl bg-slate-900 text-white p-0 hover:bg-primary transition-colors">
+                            <QrCode className="w-5 h-5" />
+                         </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -216,24 +211,22 @@ function ClientContent() {
           </ScrollArea>
         </section>
 
-        {/* Atalhos Rápidos Estilizados */}
-        <section className="grid grid-cols-2 gap-4 pb-12">
-           <Link href="/stations">
-             <Button variant="outline" className="w-full h-24 bg-white border-none shadow-xl rounded-[2rem] flex flex-col gap-2 hover:bg-slate-50">
-               <div className="p-3 bg-primary/10 rounded-2xl text-primary">
-                 <Fuel className="w-6 h-6" />
-               </div>
-               <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600">Postos</span>
-             </Button>
-           </Link>
-           <Link href="/coupons">
-             <Button variant="outline" className="w-full h-24 bg-white border-none shadow-xl rounded-[2rem] flex flex-col gap-2 hover:bg-slate-50">
-               <div className="p-3 bg-primary/10 rounded-2xl text-primary">
-                 <Gift className="w-6 h-6" />
-               </div>
-               <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600">Cupons</span>
-             </Button>
-           </Link>
+        {/* Ações Rápidas Ultra Clean */}
+        <section className="pb-10 grid grid-cols-4 gap-4">
+           {[
+             { icon: MapPin, label: "Mapa", href: "/navigator", color: "bg-blue-500" },
+             { icon: Gift, label: "Ofertas", href: "/coupons", color: "bg-purple-500" },
+             { icon: Wallet, label: "Extrato", href: "/wallet", color: "bg-orange-500" },
+             { icon: TrendingDown, label: "Preços", href: "/stations", color: "bg-green-500" }
+           ].map((action, i) => (
+             <Link key={i} href={action.href} className="flex flex-col items-center gap-3">
+                <div className="w-16 h-16 bg-white shadow-xl shadow-slate-200/50 rounded-[1.75rem] flex items-center justify-center border border-slate-50 transition-transform active:scale-90 overflow-hidden relative group">
+                   <div className={cn("absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity", action.color)}></div>
+                   <action.icon className="w-6 h-6 text-slate-700 group-hover:text-primary transition-colors" />
+                </div>
+                <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">{action.label}</span>
+             </Link>
+           ))}
         </section>
 
       </div>
