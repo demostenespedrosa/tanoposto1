@@ -121,28 +121,6 @@ function ClientContent() {
           </div>
         </header>
 
-        {/* Home Widget - iOS Style */}
-        <section className="relative">
-          <div className="bg-white rounded-[2.5rem] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-black/[0.02] flex flex-col items-center text-center space-y-6 overflow-hidden relative group active:scale-[0.98] transition-transform duration-300">
-            {/* Background Decorative Element */}
-            <div className="absolute -top-20 -right-20 w-48 h-48 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
-            
-            <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mb-2">
-              <Fuel className="w-10 h-10 text-primary" />
-            </div>
-            
-            <div className="space-y-1">
-              <h2 className="text-2xl font-bold tracking-tight text-black">Pronto para abastecer?</h2>
-              <p className="text-sm text-[#8E8E93] font-medium">Economize até R$ 0,45 por litro hoje</p>
-            </div>
-
-            <Button className="w-full h-14 rounded-2xl bg-black text-white hover:bg-black/90 text-md font-bold shadow-xl shadow-black/10 flex gap-3">
-              <QrCode className="w-5 h-5" />
-              Escanear Bomba
-            </Button>
-          </div>
-        </section>
-
         {/* Quick Stats - iOS Cards */}
         <div className="grid grid-cols-2 gap-4">
           <Link href="/wallet" className="bg-white rounded-[2rem] p-6 border border-black/[0.02] shadow-sm active:scale-95 transition-transform flex flex-col justify-between h-36">
