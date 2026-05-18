@@ -8,7 +8,17 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
-import { Fuel, MapPin, Wallet, Gift, Bell, Star, TrendingDown, Loader2 } from "lucide-react"
+import { 
+  Fuel, 
+  MapPin, 
+  Wallet, 
+  Gift, 
+  Bell, 
+  Star, 
+  TrendingDown, 
+  Loader2,
+  QrCode 
+} from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
